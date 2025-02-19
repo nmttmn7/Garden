@@ -1,21 +1,30 @@
 --ENTITY
-local ENTITY = {
+Entity = {
     nome, --name
     essencia, -- essence
     fome, --hunger
-    sede  --thirst
-    --Behavior Tree
+    sede,  --thirst
+    arvoreDeComportamento --Behavior Tree
 }
 
-function ENTITY.construir(nome, essencia)
-    local self = setmetatable({}, ENTITY)
+function Entity.construir(nome, essencia, fome, sede)
+    local self = setmetatable({}, Entity)
 
     self.nome = nome
     self.essencia = essencia
+    self.fome = fome
+    self.sede = sede
 
     return self
 end
 
+function Entity.construirCerebro(cerebro)
+    local self = setmetatable({}, Entity)
+    
+    self.arvoreDeComportamento = cerebro
+
+    return self
+end
 
 --[[Just remeber this can be done 
 function ENTITY.construct(...)
@@ -30,7 +39,7 @@ function ENTITY.construct(...)
     
 end   ENTITY.construct({nome = 'hello'})]]
 
-function ENTITY:ler()
+function Entity:ler()
 
     --[[Note that you cannot guarantee any order in keyset. 
         If you want the keys in sorted order, then 
@@ -42,11 +51,9 @@ function ENTITY:ler()
 end
 
 --ENTITY.__index = ENTITY (Does same this as this) Kinda like a pointer points to this method and links it with class
-function ENTITY.__index(tab,key)
-    return ENTITY[key]
+function Entity.__index(tab,key)
+    return Entity[key]
 end
 
 
 
-local instance = ENTITY.construir("Onyx", "Rock")
-instance:ler()
