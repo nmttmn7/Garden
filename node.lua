@@ -4,7 +4,12 @@
     Cannot do NODE = SEQUENCE = {}, SELECTOR = {}, ACTION = {}
     BECAUSE THAT MEANS EACH NODE HAS A SEQUENCE, SELECTOR, ACTION]]
 
+    local WALK_DISTANCE_X = 40
+    local WALK_DISTANCE_Y = 40
+    local WALK_DISTANCE_Z = 40
 
+--Initialize NODE
+posicao = {}
 --Initialize NODE
 Node = {}
 --Make A Fuction that constructs what a node is!
@@ -27,7 +32,7 @@ end
 
 
 function Node:obterIndice(index)
-    for k, v in pairs(self.children) do
+    for k, v in ipairs(self.children) do
         if k == index then
          return v
         end
@@ -39,7 +44,7 @@ function Node:ler()
     print('----------------------------------')
     print('[N]: ' .. self.type)
     print('[C]: ')
-    for _, v in pairs(self.children) do
+    for _, v in ipairs(self.children) do
         print(v.type)
     end
     print('----------------------------------')
@@ -53,44 +58,48 @@ function Node:recLer()
     end
 
 
-    for _, v in pairs(self.children) do
+    for _, v in ipairs(self.children) do
         print(v.type)
         print(#v.children)
         v:recLer()
     end
     print('----------------------------------')
-    
+
 
 end
 
 
--- Sequence Node: Runs children in order, fails if any child fails
+--STOPS AT FIRST CHILD THAT IS FAILURE OR RUNNING
 SEQUENCE = Node:construir("SEQUENCE")
-function SEQUENCE:correr()
-    for _, child in pairs(self.children) do
-        if not child:correr() then
-            return false -- Fail if any child fails
+function SEQUENCE:correr(entity)
+    for _, v in ipairs(self.children) do
+
+        local state = v:correr(entity)
+
+        if state == STATES.FAILURE or state == STATES.RUNNING then
+            return STATES.FAILURE -- Fail if any child fails
         end
     end
-    return true -- Succeed if all children succeed
+
+    return STATES.SUCCESS -- Succeed if all children succeed
 end
 
 
 --STOPS AT FIRST CHILD THAT IS SUCCESS OR RUNNING
 SELECTOR = Node:construir('SELECTOR')
-function SELECTOR:correr()
+function SELECTOR:correr(entity)
 
-    for _, v in pairs(self.children) do
+    for _, v in ipairs(self.children) do
 
-        local state = v.correr()
+        local state = v:correr(entity)
 
-        if state == true then
-            return true
+        if state == STATES.SUCCESS or state == STATES.RUNNING then
+            return STATES.SUCCESS -- SUCCEEDS if any child fails
         end
 
     end
     
-    return false
+    return STATES.FAILURE -- Fails if all children fail
 end
 
 --SUCCESS RUNNING FAILURE
@@ -101,22 +110,76 @@ function ACTION:construir(func)
     self.__index = self
     return action
 end
-function ACTION:correr()
-    return self.func() -- Execute the action
+function ACTION:correr(entity)
+    return self.func(entity) -- Execute the action
 end
 
 -- Example Actions
 function ActionTRUE()
-    print("Action 1: Succeeded")
-    return true
+    print("Action: SUCCESS")
+    return STATES.SUCCESS
 end
 
 function ActionFALSE()
-    print("Action 2: Failed")
-    return false
+    print("Action: FAILURE")
+    return STATES.FAILURE
 end
 
-function Action3()
-    print("Action 3: Succeeded")
-    return true
+function ActionRUNNING()
+    print("Action: RUNNING")
+    return STATES.RUNNING
 end
+
+--For Food
+function ParaComida(entity)
+
+    local x = 0
+    local y = 0
+    local z = 0
+
+
+    if entity.posicao.X > x then
+        entity.posicao.X = entity.posicao.X - 1
+    elseif entity.posicao.X < x then
+        entity.posicao.X = entity.posicao.X + 1
+    end
+
+    print(entity.posicao.X)
+
+    if entity.posicao.X == x then
+        return STATES.SUCCESS;
+    end
+
+    return STATES.RUNNING
+end
+
+function Walk(entity)
+
+    local X = WALK_DISTANCE_X * entity.velocidade
+    local Y = WALK_DISTANCE_Y * entity.velocidade
+    local Z = WALK_DISTANCE_Z * entity.velocidade
+
+    entity.posicao.X = entity.posicao.X - X
+    entity.posicao.Y = entity.posicao.Y - Y
+    entity.posicao.Z = entity.posicao.Z - Z
+
+    if entity.posicao.X == x and entity.posicao.Y == y and entity.posicao.Z == z then
+        return true
+    end
+
+        return false
+
+end
+
+
+
+function claraMem()
+    Memory = {}
+end
+
+
+STATES = {
+    SUCCESS = 'SUCCESS',
+    RUNNING = 'RUNNING',
+    FAILURE = 'FAILURE'
+}

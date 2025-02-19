@@ -1,19 +1,28 @@
 --ENTITY
 Entity = {
+
     nome, --name
     essencia, -- essence
     fome, --hunger
-    sede,  --thirst
-    arvoreDeComportamento --Behavior Tree
+    sede, --thirst
+    velocidade,  --speed
+    arvoreDeComportamento, --Behavior Tree
+
+    posicao = { X = 0 , Y = 0 , Z = 0 },
+
+
 }
 
-function Entity.construir(nome, essencia, fome, sede)
+function Entity.construir(nome, essencia, fome, sede, velocidade)
     local self = setmetatable({}, Entity)
 
     self.nome = nome
     self.essencia = essencia
     self.fome = fome
     self.sede = sede
+    self.velocidade = velocidade
+
+    self:gerarPosicaoAleatoria()
 
     return self
 end
@@ -24,6 +33,14 @@ function Entity.construirCerebro(cerebro)
     self.arvoreDeComportamento = cerebro
 
     return self
+end
+
+function Entity:gerarPosicaoAleatoria()
+
+    self.posicao.X = math.random(-10,10)
+    self.posicao.Y = math.random(-10,10)
+    self.posicao.Z = math.random(-10,10)
+
 end
 
 --[[Just remeber this can be done 
@@ -38,6 +55,8 @@ function ENTITY.construct(...)
     print('[1]' .. args[1])
     
 end   ENTITY.construct({nome = 'hello'})]]
+
+
 
 function Entity:ler()
 
