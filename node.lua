@@ -9,8 +9,6 @@
     local WALK_DISTANCE_Z = 40
 
 --Initialize NODE
-posicao = {}
---Initialize NODE
 Node = {}
 --Make A Fuction that constructs what a node is!
 function Node:construir(type)
@@ -133,15 +131,21 @@ end
 --For Food
 function ParaComida(entity)
 
-    local x = 0
-    local y = 0
-    local z = 0
+    local x = 1
+    local y = 1
+ 
 
 
     if entity.posicao.X > x then
         entity.posicao.X = entity.posicao.X - 1
     elseif entity.posicao.X < x then
         entity.posicao.X = entity.posicao.X + 1
+    end
+
+    if entity.posicao.Y > y then
+        entity.posicao.Y = entity.posicao.Y - 1
+    elseif entity.posicao.Y < Y then
+        entity.posicao.Y = entity.posicao.Y + 1
     end
 
     print(entity.posicao.X)
@@ -169,12 +173,6 @@ function Walk(entity)
 
         return false
 
-end
-
-
-
-function claraMem()
-    Memory = {}
 end
 
 
