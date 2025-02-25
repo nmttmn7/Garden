@@ -10,9 +10,8 @@ A garden project. This project allows you to create creatures that can make thei
 - **World Generation**: Generate a world with water, grass, and mountains.
 - **Behavior Tree**: Behavior trees allow creatures to make decisions within the game world.
 - **Add/Remove from Behavior Tree**: Customize what your creature wants to do. Prioritize what goals take precedent over another.
-- **Survival System**: .
 
-## Goals
+## Goals/TODO
 - **Survival System**: Add a Survival system. Creature must interact with one other to not die!
 
 
