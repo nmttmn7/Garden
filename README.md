@@ -2,13 +2,17 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-A garden project. This system allows you to add, view, update, and delete books, making it easy to keep track of your library.
+A garden project. This project allows you to create creatures that can make their own decisions in a generated world!
 
 ## Features
 
-- **Add Books**: Add new books with details like title, author, genre, and publication year.
-- **View Books**: View all books in your collection with their details.
-- **Update Books**: Update existing book details.
-- **Delete Books**: Remove books from your collection.
-- **Search Books**: Search for books by title, author, or genre.
+- **Add Creatures**: Add creatures with attributes such as name, species, temperment, ect.
+- **World Generation**: Generate a world with water, grass, and mountains.
+- **Behavior Tree**: Behavior trees allow creatures to make decisions within the game world.
+- **Add/Remove from Behavior Tree**: Customize what your creature wants to do. Prioritize what goals take precedent over another.
+- **Survival System**: .
+
+## Goals
+- **Survival System**: Add a Survival system. Creature must interact with one other to not die!
+
 
