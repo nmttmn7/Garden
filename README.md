@@ -12,6 +12,7 @@ A garden project. This project allows you to create creatures that can make thei
 - **Add/Remove from Behavior Tree**: Customize what your creature wants to do. Prioritize what goals take precedent over another.
 
 ## Goals/TODO
+- **Plants**: Add a plants that can make decisions like creatures!
 - **Survival System**: Add a Survival system. Creature must interact with one other(and the game world) in order to live!
 
 
