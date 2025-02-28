@@ -1,3 +1,4 @@
+require('binarytree')
 require('world')
 require('entity')
 require('node')
@@ -43,19 +44,43 @@ function TestEntity()
     if visible == true then
         LerMundo()
     end
-    
+
     entity.arvoreDeComportamento = TestBT()
     
     return entity
 
 end
 
+
 function TestBT()
     local root = SEQUENCE:construir()
+
+    if root ~= SEQUENCE.type then
+        error('!!!!!!!!!RAIZ NAO CORESPONDE!!!!!!!!!')
+        --error('!!!!!!!!!ROOT NOT MATCHING!!!!!!!!!')
+    end
+
     local actionT = ACTION:construir(ActionTRUE)
+
+    if actionT ~= ACTION then
+        error('!!!!!!!!!ACAO NAO CORESPONDE!!!!!!!!!')
+        --error('!!!!!!!!!ACTION NOT MATCHING!!!!!!!!!')
+    end
+
     local actionF = ACTION:construir(ActionFALSE)
+
+    if actionF ~= ACTION then
+        error('!!!!!!!!!ACAO NAO CORESPONDE!!!!!!!!!')
+        --error('!!!!!!!!!ACTION NOT MATCHING!!!!!!!!!')
+    end
+
     local actionR = ACTION:construir(ActionRUNNING)
 
+    if actionR ~= ACTION then
+        error('!!!!!!!!!ACAO NAO CORESPONDE!!!!!!!!!')
+        --error('!!!!!!!!!ACTION NOT MATCHING!!!!!!!!!')
+    end
+    
     root:adicionar(actionT)
     root:adicionar(ACTION:construir(ParaComida))
     root:adicionar(actionT)
@@ -73,4 +98,18 @@ function TestBT()
     return root
 end
 
-UnitTest()
+
+function NewTest()
+
+    local root = NodeBN:construir(1)
+    print("------------------------")
+    root:Adicionar(NodeBN:construir(2))
+    print("------------------------")
+   -- root:Adicionar(NodeBN:construir(3))
+    print("------------------------")
+   
+    root:Ler()
+end
+
+--UnitTest()
+NewTest()

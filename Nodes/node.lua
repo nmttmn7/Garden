@@ -1,4 +1,4 @@
-
+require 'Nodes/actions'
 -- Base Node Class
 --[[Node Class that is a type = type then has all its children
     Cannot do NODE = SEQUENCE = {}, SELECTOR = {}, ACTION = {}
@@ -11,7 +11,7 @@
 --Initialize NODE
 Node = {}
 --Make A Fuction that constructs what a node is!
-function Node:construir(type)
+function Node:Construir(type)
     --a local node that has THE TYPE and THE children table
     local node = { type = type, children = {} }
     setmetatable(node, self)
@@ -19,25 +19,18 @@ function Node:construir(type)
     return node
 end
 
-function Node:construirBN()
-    --a local node that has THE TYPE and THE children table
-    local node = { esquerdo, certo }
-    setmetatable(node, self)
-    self.__index = self
-    return node
-end
 
 --Add 
-function Node:adicionar(value)
+function Node:Adicionar(value)
     table.insert(self.children, value)
 end
 --Delete
-function Node:excluirIndice(index)
+function Node:ExcluirIndice(index)
     table.remove(self.children, index)
 end
 
 
-function Node:obterIndice(index)
+function Node:ObterIndice(index)
     for k, v in ipairs(self.children) do
         if k == index then
          return v
@@ -46,7 +39,7 @@ function Node:obterIndice(index)
 end
 
 
-function Node:ler()
+function Node:Ler()
     print('----------------------------------')
     print('[N]: ' .. self.type)
     print('[C]: ')
@@ -56,7 +49,7 @@ function Node:ler()
     print('----------------------------------')
 end
 
-function Node:recLer()
+function Node:RecLer()
 
     print('----------------------------------')
     if #self.children == 0 then
@@ -76,11 +69,11 @@ end
 
 
 --STOPS AT FIRST CHILD THAT IS FAILURE OR RUNNING
-SEQUENCE = Node:construir("SEQUENCE")
-function SEQUENCE:correr(entity)
+SEQUENCE = Node:Construir("SEQUENCE")
+function SEQUENCE:Correr(entity)
     for _, v in ipairs(self.children) do
 
-        local state = v:correr(entity)
+        local state = v:Correr(entity)
 
         if state == STATES.FAILURE or state == STATES.RUNNING then
             return STATES.FAILURE -- Fail if any child fails
@@ -92,12 +85,12 @@ end
 
 
 --STOPS AT FIRST CHILD THAT IS SUCCESS OR RUNNING
-SELECTOR = Node:construir('SELECTOR')
-function SELECTOR:correr(entity)
+SELECTOR = Node:Construir('SELECTOR')
+function SELECTOR:Correr(entity)
 
     for _, v in ipairs(self.children) do
 
-        local state = v:correr(entity)
+        local state = v:Correr(entity)
 
         if state == STATES.SUCCESS or state == STATES.RUNNING then
             return STATES.SUCCESS -- SUCCEEDS if any child fails
@@ -109,14 +102,14 @@ function SELECTOR:correr(entity)
 end
 
 --SUCCESS RUNNING FAILURE
-ACTION = Node:construir("ACTION")
-function ACTION:construir(func)
+ACTION = Node:Construir("ACTION")
+function ACTION:Construir(func)
     local action = { func = func }
     setmetatable(action, self)
     self.__index = self
     return action
 end
-function ACTION:correr(entity)
+function ACTION:Correr(entity)
     return self.func(entity) -- Execute the action
 end
 
@@ -135,54 +128,34 @@ function ActionRUNNING()
     print("Action: RUNNING")
     return STATES.RUNNING
 end
-
 --For Food
 function ParaComida(entity)
 
-    local x = 1
-    local y = 1
+    local x = 50
+    local y = 50
  
+    local posicao = entity:ObtePosicao()
 
-
-    if entity.posicao.X > x then
-        entity.posicao.X = entity.posicao.X - 1
-    elseif entity.posicao.X < x then
-        entity.posicao.X = entity.posicao.X + 1
+    if posicao.x > x then
+        posicao.x = posicao.x - 1
+    elseif posicao.x < x then
+        posicao.x = posicao.x + 1
     end
 
-    if entity.posicao.Y > y then
-        entity.posicao.Y = entity.posicao.Y - 1
-    elseif entity.posicao.Y < Y then
-        entity.posicao.Y = entity.posicao.Y + 1
+    if posicao.y > y then
+        posicao.y = posicao.y - 1
+    elseif posicao.y < y then
+        posicao.y = posicao.y + 1
     end
 
-    print(entity.posicao.X)
+    print(posicao.x)
 
-    if entity.posicao.X == x then
+    if posicao.x == x then
         return STATES.SUCCESS;
     end
 
     return STATES.RUNNING
 end
-
-function Walk(entity)
-
-    local X = WALK_DISTANCE_X * entity.velocidade
-    local Y = WALK_DISTANCE_Y * entity.velocidade
-    local Z = WALK_DISTANCE_Z * entity.velocidade
-
-    entity.posicao.X = entity.posicao.X - X
-    entity.posicao.Y = entity.posicao.Y - Y
-    entity.posicao.Z = entity.posicao.Z - Z
-
-    if entity.posicao.X == x and entity.posicao.Y == y and entity.posicao.Z == z then
-        return true
-    end
-
-        return false
-
-end
-
 
 STATES = {
     SUCCESS = 'SUCCESS',

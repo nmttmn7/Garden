@@ -25,11 +25,12 @@ end
 function LerMundo()
 
     print('\n' .. '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!MAP')
+
     for y = 1, #MundoNovo do
         if y ~= 1 then
             io.write("\n")
         end
-        for x = 1, #MundoNovo do
+        for x = 1, #MundoNovo[y] do
             io.write(MundoNovo[y][x])
         end
     end
