@@ -19,6 +19,14 @@ function Node:construir(type)
     return node
 end
 
+function Node:construirBN()
+    --a local node that has THE TYPE and THE children table
+    local node = { esquerdo, certo }
+    setmetatable(node, self)
+    self.__index = self
+    return node
+end
+
 --Add 
 function Node:adicionar(value)
     table.insert(self.children, value)
