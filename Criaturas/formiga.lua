@@ -11,7 +11,8 @@ function Formiga:Construir(nome)
 
     local cerebelo = {memoria = {}, ArvoreDeComportamento = GerarArvoreDeComportamento()}
     this.cerebelo = cerebelo
-    --cerebelo:Correr(se)
+    this.velocidade = 10
+
     setmetatable(this, self)
 
 

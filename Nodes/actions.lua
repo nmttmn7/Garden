@@ -8,8 +8,9 @@ function Vagar(entity)
     local novoPosicao = memoria['IrParaPosicao'] or nil
 
     if novoPosicao == nil then
-        
+        OO(entity)
     end
+
     entity:AdicionarMemoria({['IrParaPosicao'] = 3})
     local posicao = entity:ObtePosicao()
     
@@ -22,9 +23,12 @@ function Vagar(entity)
 end
 
 function OO(entity)
-local posicao = entity.posicao
 
-return 
+    local posicao = entity.posicao
+    local velocidade = entity.velocidade
+    local l = math.random(0, velocidade)
+
+    return 
 end
 
 --For Food
