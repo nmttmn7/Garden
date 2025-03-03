@@ -19,9 +19,5 @@ function Plantar:Construir(nome, saude, essencia, fome, sede)
 
 end
 
-function Asteriod()
-
-end
-
 local p = Plantar:Construir('Nome', 12, "w2")
 
