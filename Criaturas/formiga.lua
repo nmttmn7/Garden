@@ -35,7 +35,7 @@ function Formiga:RemoverMemoria(value)
     i = i+1
     end
 end
-function Formiga:Draw()
+function Formiga:Empate()
     local opacity = 1
 
     love.graphics.setColor(1,1,1,opacity)

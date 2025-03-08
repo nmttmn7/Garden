@@ -21,6 +21,21 @@ function Modulos:Draw()
     love.graphics.circle('fill', self.x, self.y, 20)
     love.graphics.setColor(0,0,0,1)
     love.graphics.circle('line', self.x, self.y, 20)
+
+    local x,y = love.mouse.getPosition()
+
+    local leftboundX = self.x - 15
+    local rightboundX = self.x + 15
+
+    local bottomboundY = self.y - 15
+    local topboundY = self.y + 15
+
+    
+
+    if  x > leftboundX and x < rightboundX and y > bottomboundY and y < topboundY then
+        CursorTelha = self.cor
+        love.graphics.print("left: " .. leftboundX .. " right " .. rightboundX)
+    end
     
 end
 

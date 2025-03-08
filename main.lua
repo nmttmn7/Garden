@@ -3,44 +3,59 @@
 --require('node')
 
 require 'constants'
+
 push = require 'push-master/push'
 
 require 'Mundo/mundo'
 require 'Criaturas/formiga'
+require 'Criaturas/Plantar/tulipa'
 require 'playermouse'
 
-local Entidades = {}
+local Telha = require('telha')
+local Criaturas = {}
+local Plantas = {Tulipa:Construir('tulipa')}
 
-local Tiles = {
-    1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,
-}
 
-local gMundo = Mundo:Construir(Tiles,8,6)
+local Telhas = {}
+
+CursorTelha = Telha.water
+
+
+local MundoX, MundoY = love.window.getDesktopDimensions()
+function GerarTelha()
+    local mX = MundoX / TamanhoDaCelula
+    local mY = MundoY / TamanhoDaCelula
+    for y = 1, mY do
+    for x = 1, mX do
+        table.insert(Telhas, Telha.dirt)
+    end
+    end
+
+
+    gMundo = Mundo:Construir(Telhas,mX,mY)
+end
+
+
 
 function love.load()
+    GerarTelha()
     love.mouse.setVisible(false)
-
+ 
+    
     push:setupScreen(VIRTUAL_WIDTH,VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT,
-    {fullscreen=false,
+    {fullscreen=true,
     vsync=true,
     resizable =true})
-    local show_debugging = true
-
-    formiga = Formiga:Construir('Antanas')
-
-    table.insert(Entidades, formiga)
-    gMundo:MudarTelha(1,1,2)
-    gMundo:MudarTelha(1,3,3)
     
+
+    --formiga = Formiga:Construir('Antanas')
+
+   -- table.insert(Criaturas, formiga)
+
 end
 
 function love.update(dt)
-    formiga:Update()
+  
 end
 
 function love.keypressed(key)
@@ -49,13 +64,23 @@ function love.keypressed(key)
     end
 end
 
+function love.resize(w,h)
+   -- push:resize(w,h)
+end
 function love.draw()
+   -- push:start()
+    
     gMundo:Empate()
     Rato:Draw()
-    love.graphics.setColor(1,1,1,1)
+
+    EntidadeEmpate()
+
+
+    love.graphics.setColor(love.math.colorFromBytes(CursorTelha))
     local x, y = love.mouse.getPosition()
     love.graphics.circle('fill', x, y, 10)
-    
+    love.graphics.setColor(0,0,0,1)
+    love.graphics.circle('line', x, y, 10)
     leftDown = love.mouse.isDown(1)
 
     if leftDown then
@@ -64,27 +89,33 @@ function love.draw()
         
         love.graphics.print(Lx .. " eee " .. Ly)
         
-        Telha(Lx,Ly)
+        MudarTelha(Lx,Ly)
 
     end
 
+    
+  --  push:finish()
 end
 
-function love.mousepressed(x,y,button)
+function EntidadeEmpate()
+    
+    for _, c in ipairs(Criaturas) do
+        c:Empate()
+    end
 
-    if button == 1 then
-        love.graphics.print("EOWOWOWO")
+    for _, p in ipairs(Plantas) do
+        p:Empate()
     end
 end
 
 
 
-function Telha(x,y)
+function MudarTelha(x,y)
 
-    local floorX = math.floor(x / 64)
-    local floorY = math.floor(y / 64)
+    local floorX = math.floor(x / TamanhoDaCelula)
+    local floorY = math.floor(y / TamanhoDaCelula)
 
 
-    gMundo:MudarTelha(floorX,floorY,2)
+    gMundo:MudarTelha(floorX,floorY,CursorTelha)
     
 end

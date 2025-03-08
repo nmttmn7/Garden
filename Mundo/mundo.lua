@@ -1,42 +1,40 @@
-require 'UI/colors'
+local Telha = require('telha')
+local Cores = require('Resources.colors')
+
 Mundo = {}
 Mundo.__index = Mundo
 
+TamanhoDaCelula = 40
+
 function Mundo:Construir(telhas,largura,altura)
     local this = {
-        telhas = telhas,
+        telhas = telhas, --Tiles
         largura = largura, --Width
         altura = altura, --Height
-        tamanhoDaCelula = 64
+        tamanhoDaCelula = TamanhoDaCelula --CellSize
     }
     setmetatable(this,self)
 
     return this
 end
 
+
 function Mundo:Empate()
     for row=0,self.altura-1 do 
         for col=0,self.largura-1 do
             local sx = col * self.tamanhoDaCelula
             local sy = row * self.tamanhoDaCelula
-            local tile = self:ObterTelha(col,row)
-            if tile == 0 then
+            local telha = self:ObterTelha(col,row)
+
+       
                 
-                love.graphics.rectangle('line',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
-              
-            elseif tile == 1 then
-                love.graphics.setColor(love.math.colorFromBytes(Cores.dirtbrown))
-                love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
-                love.graphics.setColor(1,1,1,1)
-            elseif tile == 2 then
-                love.graphics.setColor(love.math.colorFromBytes(Cores.grassgreen))
-                love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
-                love.graphics.setColor(1,1,1,1)
-            elseif tile == 3 then
-                love.graphics.setColor(love.math.colorFromBytes(Cores.waterblue))
-                love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
-                love.graphics.setColor(1,1,1,1)
-            end
+                --love.graphics.rectangle('line',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
+
+
+            love.graphics.setColor(love.math.colorFromBytes(telha))
+            love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
+            love.graphics.setColor(1,1,1,1)
+            
             
         end
     end
@@ -59,3 +57,4 @@ function Mundo:MudarTelha(x,y,tileType)
     self.telhas[y * self.largura + x + 1] = tileType
     return true
 end
+

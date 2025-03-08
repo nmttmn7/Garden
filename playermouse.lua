@@ -1,5 +1,5 @@
 require 'module'
-require 'UI/colors'
+local Cores = require('Resources.colors')
 
 
 Rato = {}
@@ -35,8 +35,7 @@ function Rato:Draw()
             x,y = love.mouse.getPosition( )
             Modulos:Order(M,x,y)
         end
-        
-       -- Rato:OO(x,y)
+
        for _, value in ipairs(M) do
             value:Draw()
        end
@@ -45,7 +44,7 @@ function Rato:Draw()
     end
 end
 
-function Telha(x,y)
+function Teha(x,y)
     local difference = x % 64
     local floor = math.floor(x / 64)
 
@@ -54,19 +53,4 @@ function Telha(x,y)
     
 end
 
-function Rato:CirleModules()
 
-end
-
-function Rato:OO(x,y)
-    local opacity = 1
-    love.graphics.setColor(1,1,1,opacity)
-    love.graphics.circle('fill', x, y, 20)
-
-    local s = Modulos[1]
-    x, y = love.mouse.getPosition()
-    s:MO(Modulos)
-    s:Draw()
-end
-
-Telha(100,5)
