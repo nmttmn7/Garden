@@ -1,3 +1,4 @@
+require 'UI/colors'
 Mundo = {}
 Mundo.__index = Mundo
 
@@ -24,15 +25,15 @@ function Mundo:Empate()
                 love.graphics.rectangle('line',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
               
             elseif tile == 1 then
-                love.graphics.setColor(love.math.colorFromBytes(56,25,10))
+                love.graphics.setColor(love.math.colorFromBytes(Cores.dirtbrown))
                 love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
                 love.graphics.setColor(1,1,1,1)
             elseif tile == 2 then
-                love.graphics.setColor(love.math.colorFromBytes(56,128,4))
+                love.graphics.setColor(love.math.colorFromBytes(Cores.grassgreen))
                 love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
                 love.graphics.setColor(1,1,1,1)
             elseif tile == 3 then
-                love.graphics.setColor(love.math.colorFromBytes(56,128,4))
+                love.graphics.setColor(love.math.colorFromBytes(Cores.waterblue))
                 love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
                 love.graphics.setColor(1,1,1,1)
             end

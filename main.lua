@@ -7,21 +7,24 @@ push = require 'push-master/push'
 
 require 'Mundo/mundo'
 require 'Criaturas/formiga'
+require 'playermouse'
 
 local Entidades = {}
 
 local Tiles = {
-    0,0,0,0,0,0,0,0,
-    0,0,0,1,0,0,0,0,
-    0,0,1,1,0,1,0,0,
-    0,0,1,0,0,1,0,0,
-    0,0,0,0,0,1,0,0,
-    0,0,0,0,0,0,0,0,
+    1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,
 }
 
 local gMundo = Mundo:Construir(Tiles,8,6)
 
 function love.load()
+    love.mouse.setVisible(false)
+
     push:setupScreen(VIRTUAL_WIDTH,VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT,
     {fullscreen=false,
     vsync=true,
@@ -48,6 +51,40 @@ end
 
 function love.draw()
     gMundo:Empate()
-    --formiga:Draw()
+    Rato:Draw()
+    love.graphics.setColor(1,1,1,1)
+    local x, y = love.mouse.getPosition()
+    love.graphics.circle('fill', x, y, 10)
+    
+    leftDown = love.mouse.isDown(1)
+
+    if leftDown then
+        
+        local Lx,Ly = love.mouse.getPosition( )
+        
+        love.graphics.print(Lx .. " eee " .. Ly)
+        
+        Telha(Lx,Ly)
+
+    end
+
+end
+
+function love.mousepressed(x,y,button)
+
+    if button == 1 then
+        love.graphics.print("EOWOWOWO")
+    end
+end
+
+
+
+function Telha(x,y)
+
+    local floorX = math.floor(x / 64)
+    local floorY = math.floor(y / 64)
+
+
+    gMundo:MudarTelha(floorX,floorY,2)
     
 end
