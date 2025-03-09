@@ -1,4 +1,4 @@
-require 'entidade'
+require 'Entidade.entidade'
 local Cores = require('Resources.colors')
 
 
@@ -6,9 +6,9 @@ local Cores = require('Resources.colors')
 Tulipa = Entidade:Construir()
 Tulipa.__index = Tulipa
 
-function Tulipa:Construir(nome)
+function Tulipa:Construir(nome,x,y)
 
-    local this = Entidade:Construir(nome, 25, 'Tulipa')
+    local this = Entidade:Construir(nome, 25, 'Tulipa',x,y)
 
     this.cor = Cores.warmpurple
 
@@ -26,3 +26,8 @@ function Tulipa:Empate()
     love.graphics.circle('line', self.posicao.x, self.posicao.y,  10)
 
 end
+
+function Tulipa:OO()
+    print("Tulipa")
+end
+

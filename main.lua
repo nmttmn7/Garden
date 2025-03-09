@@ -7,13 +7,12 @@ require 'constants'
 push = require 'push-master/push'
 
 require 'Mundo/mundo'
-require 'Criaturas/formiga'
-require 'Criaturas/Plantar/tulipa'
+require 'Entidade.Plantar.tulipa'
 require 'playermouse'
 
 local Telha = require('telha')
 local Criaturas = {}
-local Plantas = {Tulipa:Construir('tulipa')}
+local Plantas = {Tulipa:Construir('tulipa',0,0)}
 
 
 local Telhas = {}
@@ -22,6 +21,11 @@ CursorTelha = Telha.water
 
 
 local MundoX, MundoY = love.window.getDesktopDimensions()
+
+function Plantas:Adicionar(value)
+    table.insert(Plantas,value)
+end
+
 function GerarTelha()
     local mX = MundoX / TamanhoDaCelula
     local mY = MundoY / TamanhoDaCelula
@@ -38,6 +42,9 @@ end
 
 
 function love.load()
+
+    text = "Type away! -- "
+
     GerarTelha()
     love.mouse.setVisible(false)
  
@@ -54,8 +61,12 @@ function love.load()
 
 end
 
+function love.textinput(t)
+    text = text .. t
+end
+
 function love.update(dt)
-  
+ 
 end
 
 function love.keypressed(key)
@@ -71,16 +82,13 @@ function love.draw()
    -- push:start()
     
     gMundo:Empate()
-    Rato:Draw()
+   -- Rato:Draw()
 
     EntidadeEmpate()
 
-
-    love.graphics.setColor(love.math.colorFromBytes(CursorTelha))
-    local x, y = love.mouse.getPosition()
-    love.graphics.circle('fill', x, y, 10)
-    love.graphics.setColor(0,0,0,1)
-    love.graphics.circle('line', x, y, 10)
+    Rato:Atualizar()
+    Rato:Empate()
+    
     leftDown = love.mouse.isDown(1)
 
     if leftDown then
@@ -92,6 +100,8 @@ function love.draw()
         MudarTelha(Lx,Ly)
 
     end
+
+    love.graphics.printf(text, 0, 0, love.graphics.getWidth())
 
     
   --  push:finish()

@@ -65,8 +65,10 @@ function GerarArvoreDeComportamento()
     return root
 end
 
+--[[
 local l = Formiga:Construir("NAME")
 l:Update("NAME")
 l:Update("NAME")
 l:Update("NAME")
 l:Update("NAME")
+]]

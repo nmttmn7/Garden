@@ -6,15 +6,15 @@
 Entidade = {}
 Entidade.__index = Entidade
 
-function Entidade:Construir()
+function Entidade:Construir(nome,saude,essencia,x,y)
     local this = {
         nome = nome, --name
         saude = saude, --health
         essencia = essencia, --essence
 
         posicao = {
-            x = 0,
-            y = 0,
+            x = x,
+            y = y,
         }
     }
 
