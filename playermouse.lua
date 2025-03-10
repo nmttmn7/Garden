@@ -39,7 +39,7 @@ function Rato:Atualizar() --Mouse:Update
         local Lx,Ly = love.mouse.getPosition( )
         
         love.graphics.print(Lx .. " eee " .. Ly)
-        GerarEntidade(Lx,Ly)
+      --  GerarEntidade(Lx,Ly)
         MudarTelha(Lx,Ly)
 
     end
@@ -61,7 +61,10 @@ function Rato:Atualizar() --Mouse:Update
         x,y = nil
     end
 
+    
 end
+
+
 
 function Rato:Empate()
 
@@ -82,5 +85,28 @@ function CliqueDireito()
 end
 
 function GerarEntidade(x,y)
-    Plantas:Adicionar(Tulipa:Construir('tulipa',x,y))
+
+    local Rx,Ry = love.mouse.getPosition( )
+    
+    
+    local ratoTelha = gMundo:ObterTelaTelha(Rx,Ry)
+
+    for _, value in pairs(Tulipa.PoderPlantar) do
+        
+        if value == ratoTelha then
+            RegistroDePlantas:Adicionar(Tulipa:Construir('tulipa',Rx,Ry))
+            --Plantas:Adicionar(Tulipa:Construir('tulipa',Rx,Ry))
+        end
+
+    end
+    
+end
+
+function RegarAsPlantas() -- Water(verb) The Plants
+    for _, value in ipairs(RegistroDePlantas) do
+        local posicao = value.ObtePosicao()
+        local x = posicao.x
+        local y = posicao.y
+
+    end
 end

@@ -1,7 +1,7 @@
 local Telha = require('telha')
 local Cores = require('Resources.colors')
 
-Mundo = {}
+local Mundo = {}
 Mundo.__index = Mundo
 
 TamanhoDaCelula = 40
@@ -49,12 +49,32 @@ function Mundo:ObterTelha(x,y)
     return self.telhas[y * self.largura + x + 1]
 end
 
+function Mundo:ObterTelaTelha(x,y)
+
+    local floorX = math.floor(x / TamanhoDaCelula)
+    local floorY = math.floor(y / TamanhoDaCelula)
+
+    return self:ObterTelha(floorX,floorY)
+end
+
+
+
 function Mundo:MudarTelha(x,y,tileType)
     if x < 0 or y < 0 or x > self.largura-1 or y > self.altura-1 then
         return false
     end
 
     self.telhas[y * self.largura + x + 1] = tileType
+
+   
+   
+    for index, value in ipairs(RegistroDePlantas) do
+
+        value:VerificarPoderPlantar(index)
+
+    end
+
     return true
 end
 
+return Mundo

@@ -1,5 +1,0 @@
---[[
-    Dependencies
-]]
-
-require 'src/Ship'

@@ -1,19 +1,18 @@
 
-require('Entidade.Plantar.tulipa')
-RegistroDePlantas = {
-    Tulipa,
-    2
-}
+RegistroDePlantas = {}
 RegistroDePlantas.__index = RegistroDePlantas
 
 
-function OO()
-    local s = RegistroDePlantas[1]
-
-    if s == nil then
-        print("EMOTY")
-    end
-    s:OO()
+function RegistroDePlantas:Adicionar(value)
+    table.insert(RegistroDePlantas,value)
 end
 
-OO()
+function RegistroDePlantas:Remover(index)
+    table.remove(RegistroDePlantas,index)
+end
+
+function RegistroDePlantas:DiminuirTodaAgua()
+    for _, value in ipairs(RegistroDePlantas) do
+        value:DiminuirAgua()
+    end 
+end

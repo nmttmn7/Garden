@@ -2,6 +2,7 @@
     Classe Base Da Entidade
     Entity Base Class
 ]]
+require('telha')
 
 Entidade = {}
 Entidade.__index = Entidade

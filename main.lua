@@ -4,16 +4,18 @@
 
 require 'constants'
 
-push = require 'push-master/push'
+push = require 'Libraries.push'
 
-require 'Mundo/mundo'
+
 require 'Entidade.Plantar.tulipa'
+require 'Entidade.Plantar.flor'
 require 'playermouse'
-
-local Telha = require('telha')
+require('telha')
+require 'Entidade.Plantar.registrodeplantas'
 local Criaturas = {}
-local Plantas = {Tulipa:Construir('tulipa',0,0)}
 
+
+local Mundo = require('Mundo.mundo')
 
 local Telhas = {}
 
@@ -22,11 +24,10 @@ CursorTelha = Telha.water
 
 local MundoX, MundoY = love.window.getDesktopDimensions()
 
-function Plantas:Adicionar(value)
-    table.insert(Plantas,value)
-end
+
 
 function GerarTelha()
+    
     local mX = MundoX / TamanhoDaCelula
     local mY = MundoY / TamanhoDaCelula
     for y = 1, mY do
@@ -61,15 +62,24 @@ function love.load()
 
 end
 
+local timer = 0
+local interval = 60
 function love.textinput(t)
-    text = text .. t
+   -- text = text .. t
 end
 
 function love.update(dt)
- 
+    for _, p in ipairs(RegistroDePlantas) do
+        p:Atualizar(dt)
+    end
+
+    
 end
 
 function love.keypressed(key)
+    if key == 'r' then 
+        GerarEntidade(0,0)
+    end
     if key == 'escape' then 
         love.event.quit()
     end
@@ -101,7 +111,7 @@ function love.draw()
 
     end
 
-    love.graphics.printf(text, 0, 0, love.graphics.getWidth())
+    --love.graphics.printf(text, 0, 0, love.graphics.getWidth())
 
     
   --  push:finish()
@@ -113,7 +123,7 @@ function EntidadeEmpate()
         c:Empate()
     end
 
-    for _, p in ipairs(Plantas) do
+    for _, p in ipairs(RegistroDePlantas) do
         p:Empate()
     end
 end
