@@ -10,7 +10,7 @@ push = require 'Libraries.push'
 require 'Entidade.Plantar.tulipa'
 require 'Entidade.Plantar.flor'
 require 'playermouse'
-require('telha')
+require('Resources.telha')
 require 'Entidade.Plantar.registrodeplantas'
 local Criaturas = {}
 
@@ -28,6 +28,11 @@ local MundoX, MundoY = love.window.getDesktopDimensions()
 
 function GerarTelha()
     
+    local dato = Carregar('mundo.json')
+    
+if dato == nil then
+        
+    
     local mX = MundoX / TamanhoDaCelula
     local mY = MundoY / TamanhoDaCelula
     for y = 1, mY do
@@ -36,8 +41,12 @@ function GerarTelha()
     end
     end
 
-
     gMundo = Mundo:Construir(Telhas,mX,mY)
+
+else
+    gMundo = Mundo:Construir(dato['telhas'],dato['largura'],dato['altura'])
+end
+
 end
 
 
@@ -69,7 +78,7 @@ function love.textinput(t)
 end
 
 function love.update(dt)
-    for _, p in ipairs(RegistroDePlantas) do
+    for _, p in ipairs(RegistroDeEntidade) do
         p:Atualizar(dt)
     end
 
@@ -115,6 +124,7 @@ function love.draw()
 
     
   --  push:finish()
+
 end
 
 function EntidadeEmpate()
@@ -123,7 +133,7 @@ function EntidadeEmpate()
         c:Empate()
     end
 
-    for _, p in ipairs(RegistroDePlantas) do
+    for _, p in ipairs(RegistroDeEntidade) do
         p:Empate()
     end
 end

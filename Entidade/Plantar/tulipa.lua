@@ -29,7 +29,7 @@ function Tulipa:VerificarPoderPlantar(index)
         end
     end
 
-    RegistroDePlantas:Remover(index)
+    RegistroDeEntidade:Remover(index)
 
 end
 
@@ -61,7 +61,7 @@ function Tulipa:Empate()
 
 end
 
-function Tulipa:IncreaseAgua(AguaDeQualidade)
+function Tulipa:AumentarAgua(AguaDeQualidade)
     self.agua = math.min(self.agua + AguaDeQualidade, self.aguaMAX)
 end
 

@@ -40,7 +40,8 @@ function Rato:Atualizar() --Mouse:Update
         
         love.graphics.print(Lx .. " eee " .. Ly)
       --  GerarEntidade(Lx,Ly)
-        MudarTelha(Lx,Ly)
+        --MudarTelha(Lx,Ly)
+        RegarAsPlantas()
 
     end
 
@@ -94,7 +95,7 @@ function GerarEntidade(x,y)
     for _, value in pairs(Tulipa.PoderPlantar) do
         
         if value == ratoTelha then
-            RegistroDePlantas:Adicionar(Tulipa:Construir('tulipa',Rx,Ry))
+            RegistroDeEntidade:Adicionar(Tulipa:Construir('tulipa',Rx,Ry))
             --Plantas:Adicionar(Tulipa:Construir('tulipa',Rx,Ry))
         end
 
@@ -103,10 +104,14 @@ function GerarEntidade(x,y)
 end
 
 function RegarAsPlantas() -- Water(verb) The Plants
-    for _, value in ipairs(RegistroDePlantas) do
-        local posicao = value.ObtePosicao()
+    for _, value in ipairs(RegistroDeEntidade) do
+        local posicao = value:ObterPosicao()
         local x = posicao.x
         local y = posicao.y
-
+        local Rx, Ry = love.mouse.getPosition()
+        local range = 60
+        if Rx + range > x and Rx - range < x and Ry + range > y and Ry - range < y then 
+            value:AumentarAgua(5)
+        end
     end
 end

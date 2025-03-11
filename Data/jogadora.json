@@ -1,0 +1,7 @@
+{
+  "regador":{
+    "type":"Terceiro",
+    "aguaDeQualidade":4,
+    "faixa":50
+  }
+}

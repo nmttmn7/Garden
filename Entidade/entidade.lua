@@ -2,7 +2,7 @@
     Classe Base Da Entidade
     Entity Base Class
 ]]
-require('telha')
+require('Resources.telha')
 
 Entidade = {}
 Entidade.__index = Entidade
@@ -24,7 +24,7 @@ function Entidade:Construir(nome,saude,essencia,x,y)
     return this
 end
 
-function Entidade:ObtePosicao()
+function Entidade:ObterPosicao()
     return self.posicao
 end
 

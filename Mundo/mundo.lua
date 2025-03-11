@@ -1,6 +1,6 @@
-local Telha = require('telha')
+local Telha = require('Resources.telha')
 local Cores = require('Resources.colors')
-
+require('Fabrica.salvarcarregarfabrica')
 local Mundo = {}
 Mundo.__index = Mundo
 
@@ -68,13 +68,17 @@ function Mundo:MudarTelha(x,y,tileType)
 
    
    
-    for index, value in ipairs(RegistroDePlantas) do
+    for index, value in ipairs(RegistroDeEntidade) do
 
         value:VerificarPoderPlantar(index)
 
     end
-
+    self:SalvarMundo()
     return true
+end
+
+function Mundo:SalvarMundo()
+    Salvar(self, 'mundo.json')
 end
 
 return Mundo

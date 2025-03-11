@@ -1,18 +1,23 @@
 
-RegistroDePlantas = {}
-RegistroDePlantas.__index = RegistroDePlantas
+RegistroDeEntidade = {}
+RegistroDeEntidade.__index = RegistroDeEntidade
 
 
-function RegistroDePlantas:Adicionar(value)
-    table.insert(RegistroDePlantas,value)
+function RegistroDeEntidade:Adicionar(value)
+    table.insert(RegistroDeEntidade,value)
 end
 
-function RegistroDePlantas:Remover(index)
-    table.remove(RegistroDePlantas,index)
+function RegistroDeEntidade:Remover(index)
+    table.remove(RegistroDeEntidade,index)
 end
 
-function RegistroDePlantas:DiminuirTodaAgua()
-    for _, value in ipairs(RegistroDePlantas) do
-        value:DiminuirAgua()
-    end 
+
+function RegistroDeEntidade:Carregar()
+    
+end
+
+function RegistroDeEntidade:Salvar()
+    for _, value in pairs(RegistroDeEntidade) do
+        Salvar(value,'registrodeentidade')
+    end
 end
