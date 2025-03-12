@@ -1,7 +1,8 @@
 
 
 function JogoNovo()
-
+    Claro('mundo.json')
+    
 end
 
 function CarregarJogo()
@@ -11,6 +12,10 @@ function CarregarJogo()
 
 end
 
-function SalvarMundo()
+function SalvarJogo()
     Salvar(gMundo, 'mundo.json')
+    
+ --   Salvar(RegistroDeEntidade,'registrodeentidade.json')
+   
 end
+

@@ -1,5 +1,9 @@
 
-RegistroDeEntidade = {}
+local allEntities = {
+    'tulipa' == Tulipa:Construir()
+}
+
+ RegistroDeEntidade = {}
 RegistroDeEntidade.__index = RegistroDeEntidade
 
 
@@ -14,10 +18,4 @@ end
 
 function RegistroDeEntidade:Carregar()
     
-end
-
-function RegistroDeEntidade:Salvar()
-    for _, value in pairs(RegistroDeEntidade) do
-        Salvar(value,'registrodeentidade')
-    end
 end

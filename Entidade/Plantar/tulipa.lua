@@ -1,11 +1,11 @@
 require 'Entidade.entidade'
-local Cores = require('Resources.colors')
+require('Recursos.constantes')
 
 
 
 Tulipa = Entidade:Construir()
 Tulipa.__index = Tulipa
-Tulipa.PoderPlantar = {Telha.dirt,Telha.grass}
+Tulipa.PoderPlantar = {Telha.sujeira,Telha.grama}
 Tulipa.agua = 45
 Tulipa.aguaMAX = 69
 Tulipa.sede = 2
@@ -80,5 +80,11 @@ function Tulipa:Hurt(value)
      --   self:Death()
     end
 
+end
+
+
+
+function OO(nome)
+    print("Hello, " .. nome .. "!")
 end
 

@@ -1,14 +1,14 @@
 require 'module'
-local Cores = require('Resources.colors')
+require('Recursos.constantes')
 
 
 Rato = {}
 Rato.__index = Rato
 
 
-M = {Modulos:Construir(0,0, Cores.dirtbrown),
-Modulos:Construir(0,0, Cores.grassgreen),
-Modulos:Construir(0,0, Cores.waterblue)}
+M = {Modulos:Construir(0,0, Telha['sujeira']),
+Modulos:Construir(0,0, Telha['grama']),
+Modulos:Construir(0,0, Telha['agua'])}
 
 PosicaoRato = nil
 

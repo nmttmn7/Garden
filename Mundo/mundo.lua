@@ -1,10 +1,15 @@
-local Telha = require('Resources.telha')
-local Cores = require('Resources.colors')
+
+require('Recursos.constantes')
 require('Fabrica.salvarcarregarfabrica')
+
 local Mundo = {}
 Mundo.__index = Mundo
 
+local Telhas = {}
+
 TamanhoDaCelula = 40
+
+local MundoX, MundoY = love.window.getDesktopDimensions()
 
 function Mundo:Construir(telhas,largura,altura)
     local this = {
@@ -29,7 +34,6 @@ function Mundo:Empate()
        
                 
                 --love.graphics.rectangle('line',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
-
 
             love.graphics.setColor(love.math.colorFromBytes(telha))
             love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
@@ -73,12 +77,40 @@ function Mundo:MudarTelha(x,y,tileType)
         value:VerificarPoderPlantar(index)
 
     end
-    self:SalvarMundo()
+
     return true
 end
 
-function Mundo:SalvarMundo()
-    Salvar(self, 'mundo.json')
+
+
+
+
+
+local function GerarTelha()
+    
+    local dato = Carregar('mundo.json')
+    
+if #dato['telhas'] == nil then
+        
+    
+    local mX = MundoX / TamanhoDaCelula
+    local mY = MundoY / TamanhoDaCelula
+    for y = 1, mY do
+    for x = 1, mX do
+        table.insert(Telhas, Telha['sujeira'])
+    end
+    end
+
+    gMundo = Mundo:Construir(Telhas,mX,mY)
+
+else
+    gMundo = Mundo:Construir(dato['telhas'],dato['largura'],dato['altura'])
+end
+
+end
+
+function CarregarMundo()
+    GerarTelha()
 end
 
 return Mundo

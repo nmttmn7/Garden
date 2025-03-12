@@ -2,7 +2,7 @@
 --require('entity')
 --require('node')
 
-require 'constants'
+require 'Recursos.constantes'
 
 push = require 'Libraries.push'
 
@@ -10,44 +10,15 @@ push = require 'Libraries.push'
 require 'Entidade.Plantar.tulipa'
 require 'Entidade.Plantar.flor'
 require 'playermouse'
-require('Resources.telha')
+
 require 'Entidade.Plantar.registrodeplantas'
 local Criaturas = {}
 
 
-local Mundo = require('Mundo.mundo')
+require 'Mundo.mundo'
 
-local Telhas = {}
-
-CursorTelha = Telha.water
-
-
-local MundoX, MundoY = love.window.getDesktopDimensions()
-
-
-
-function GerarTelha()
-    
-    local dato = Carregar('mundo.json')
-    
-if dato == nil then
-        
-    
-    local mX = MundoX / TamanhoDaCelula
-    local mY = MundoY / TamanhoDaCelula
-    for y = 1, mY do
-    for x = 1, mX do
-        table.insert(Telhas, Telha.dirt)
-    end
-    end
-
-    gMundo = Mundo:Construir(Telhas,mX,mY)
-
-else
-    gMundo = Mundo:Construir(dato['telhas'],dato['largura'],dato['altura'])
-end
-
-end
+require 'jogo'
+CursorTelha = Telha['agua']
 
 
 
@@ -55,7 +26,7 @@ function love.load()
 
     text = "Type away! -- "
 
-    GerarTelha()
+    CarregarMundo()
     love.mouse.setVisible(false)
  
     
@@ -86,11 +57,19 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-    if key == 'r' then 
+    if key == 'x' then 
         GerarEntidade(0,0)
     end
     if key == 'escape' then 
         love.event.quit()
+    end
+
+    if key == 'r' then 
+        JogoNovo()
+    end
+
+    if key == 's' then 
+        SalvarJogo()
     end
 end
 

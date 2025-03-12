@@ -2,7 +2,7 @@
     Classe Base Da Entidade
     Entity Base Class
 ]]
-require('Resources.telha')
+
 
 Entidade = {}
 Entidade.__index = Entidade

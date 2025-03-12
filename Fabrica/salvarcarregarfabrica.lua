@@ -3,6 +3,7 @@ local SalvarCarregarFabrica = {}
 
 function Salvar(data,caminhoDoArquivo)
     
+    
     caminhoDoArquivo = 'Data/' .. caminhoDoArquivo
 
     local arquivo = io.open(caminhoDoArquivo, 'w')
@@ -51,7 +52,7 @@ function Claro(caminhoDoArquivo)
 
     if arquivo then
 
-        arquivo:write('')
+        arquivo:write('{}')
 
         arquivo:close()
 
