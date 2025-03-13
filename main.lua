@@ -12,19 +12,23 @@ require 'Entidade.Plantar.flor'
 require 'playermouse'
 
 require 'Entidade.Plantar.registrodeplantas'
+require 'Entidade.registrodeentidade'
 local Criaturas = {}
 
 
 require 'Mundo.mundo'
 
 require 'jogo'
-CursorTelha = Telha['agua']
+CursorTelha = 'grama'
 
 
-
+-------------------------------------Texto
+TextoDoUsuario = ''
+ObterEntradadaDoUsuario = false
+-------------------------------------
 function love.load()
 
-    text = "Type away! -- "
+
 
     CarregarMundo()
     love.mouse.setVisible(false)
@@ -45,23 +49,38 @@ end
 local timer = 0
 local interval = 60
 function love.textinput(t)
-   -- text = text .. t
+
+    if ObterEntradadaDoUsuario == true then
+
+    TextoDoUsuario = TextoDoUsuario .. t
+
+    end
 end
 
 function love.update(dt)
-    for _, p in ipairs(RegistroDeEntidade) do
-        p:Atualizar(dt)
+    for _, e in ipairs(JogoEntidades) do
+        e:Atualizar(dt)
     end
 
     
 end
 
 function love.keypressed(key)
-    if key == 'x' then 
-        GerarEntidade(0,0)
-    end
+
+
     if key == 'escape' then 
         love.event.quit()
+    end
+
+    if key == 'return' then 
+        ObterEntradadaDoUsuario = false
+        coroutine.resume(rotinaAjudaConstruirNome)
+    elseif ObterEntradadaDoUsuario == true then
+        return
+    end
+
+    if key == 'x' then 
+        GerarJogoEntidade('tulipa')
     end
 
     if key == 'r' then 
@@ -71,6 +90,8 @@ function love.keypressed(key)
     if key == 's' then 
         SalvarJogo()
     end
+
+    
 end
 
 function love.resize(w,h)
@@ -79,13 +100,13 @@ end
 function love.draw()
    -- push:start()
     
-    gMundo:Empate()
+    gMundo:Desenhar()
    -- Rato:Draw()
 
-    EntidadeEmpate()
+   DesenharEntidades()
 
     Rato:Atualizar()
-    Rato:Empate()
+    Rato:Desenhar()
     
     leftDown = love.mouse.isDown(1)
 
@@ -99,21 +120,18 @@ function love.draw()
 
     end
 
-    --love.graphics.printf(text, 0, 0, love.graphics.getWidth())
+    love.graphics.printf("Name: " .. TextoDoUsuario, 0, 0, love.graphics.getWidth())
 
     
   --  push:finish()
 
 end
 
-function EntidadeEmpate()
+function DesenharEntidades()
     
-    for _, c in ipairs(Criaturas) do
-        c:Empate()
-    end
 
-    for _, p in ipairs(RegistroDeEntidade) do
-        p:Empate()
+    for _, e in ipairs(JogoEntidades) do
+        e:Desenhar()
     end
 end
 

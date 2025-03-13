@@ -6,9 +6,9 @@ Rato = {}
 Rato.__index = Rato
 
 
-M = {Modulos:Construir(0,0, Telha['sujeira']),
-Modulos:Construir(0,0, Telha['grama']),
-Modulos:Construir(0,0, Telha['agua'])}
+M = {Modulos:Construir(0,0, 'sujeira'),
+Modulos:Construir(0,0, 'grama'),
+Modulos:Construir(0,0, 'agua')}
 
 PosicaoRato = nil
 
@@ -67,9 +67,9 @@ end
 
 
 
-function Rato:Empate()
+function Rato:Desenhar()
 
-    love.graphics.setColor(love.math.colorFromBytes(CursorTelha))
+    love.graphics.setColor(love.math.colorFromBytes(Telha[CursorTelha]))
     local x, y = love.mouse.getPosition()
     love.graphics.circle('fill', x, y, 10)
     love.graphics.setColor(0,0,0,1)

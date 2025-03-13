@@ -24,7 +24,7 @@ function Mundo:Construir(telhas,largura,altura)
 end
 
 
-function Mundo:Empate()
+function Mundo:Desenhar()
     for row=0,self.altura-1 do 
         for col=0,self.largura-1 do
             local sx = col * self.tamanhoDaCelula
@@ -35,7 +35,7 @@ function Mundo:Empate()
                 
                 --love.graphics.rectangle('line',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
 
-            love.graphics.setColor(love.math.colorFromBytes(telha))
+            love.graphics.setColor(love.math.colorFromBytes(Telha[telha]))
             love.graphics.rectangle('fill',sx,sy,self.tamanhoDaCelula,self.tamanhoDaCelula)
             love.graphics.setColor(1,1,1,1)
             
@@ -49,7 +49,7 @@ function Mundo:ObterTelha(x,y)
     if x < 0 or y < 0 or x > self.largura-1 or y > self.altura-1 then
         return -1
     end
-
+    
     return self.telhas[y * self.largura + x + 1]
 end
 
@@ -72,9 +72,9 @@ function Mundo:MudarTelha(x,y,tileType)
 
    
    
-    for index, value in ipairs(RegistroDeEntidade) do
+    for i, value in ipairs(JogoEntidades) do
 
-        value:VerificarPoderPlantar(index)
+        value:PermitirExistencia(i)
 
     end
 
@@ -90,14 +90,14 @@ local function GerarTelha()
     
     local dato = Carregar('mundo.json')
     
-if #dato['telhas'] == nil then
+if dato['telhas'] == nil then
         
     
     local mX = MundoX / TamanhoDaCelula
     local mY = MundoY / TamanhoDaCelula
     for y = 1, mY do
     for x = 1, mX do
-        table.insert(Telhas, Telha['sujeira'])
+        table.insert(Telhas, 'sujeira')
     end
     end
 

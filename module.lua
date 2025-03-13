@@ -17,7 +17,7 @@ end
 
 function Modulos:Draw()
     local opacity = 1
-    love.graphics.setColor(love.math.colorFromBytes(self.cor))
+    love.graphics.setColor(love.math.colorFromBytes(Telha[self.cor]))
     love.graphics.circle('fill', self.x, self.y, 20)
     love.graphics.setColor(0,0,0,1)
     love.graphics.circle('line', self.x, self.y, 20)

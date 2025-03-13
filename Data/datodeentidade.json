@@ -3,10 +3,11 @@
 
     "tulipa":{
         "essencia": "Planta",
+        "nome": "Tulipa",
         "saude": 50,
         "aguaMaxima": 90,
         "taxaDeAguaDiminui": 2,
         "cor": "roxoQuente",
-        "telhaPlantavel": []
+        "telhaPlantavel": ["sujeira","grama"]
     }
 }
