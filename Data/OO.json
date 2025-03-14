@@ -1,1 +1,7 @@
-"table"
+{
+  "filhos":[{
+      "filhos":[],
+      "essencia":"ACAO"
+    }],
+  "essencia":"SEQUENCIA"
+}

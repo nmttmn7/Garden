@@ -2,7 +2,8 @@
 --require('entity')
 --require('node')
 
-require 'Recursos.constantes'
+require('Recursos.constantes')
+require('Recursos.registrodeentidade')
 
 push = require 'Libraries.push'
 
@@ -12,7 +13,7 @@ require 'Entidade.Plantar.flor'
 require 'playermouse'
 
 require 'Entidade.Plantar.registrodeplantas'
-require 'Entidade.registrodeentidade'
+
 local Criaturas = {}
 
 
@@ -30,7 +31,8 @@ function love.load()
 
 
 
-    CarregarMundo()
+    
+    CarregarJogo()
     love.mouse.setVisible(false)
  
     
@@ -58,7 +60,7 @@ function love.textinput(t)
 end
 
 function love.update(dt)
-    for _, e in ipairs(JogoEntidades) do
+    for _, e in pairs(JogoEntidades) do
         e:Atualizar(dt)
     end
 
@@ -80,7 +82,7 @@ function love.keypressed(key)
     end
 
     if key == 'x' then 
-        GerarJogoEntidade('tulipa')
+        GerarJogoEntidade('formiga')
     end
 
     if key == 'r' then 
@@ -130,8 +132,11 @@ end
 function DesenharEntidades()
     
 
-    for _, e in ipairs(JogoEntidades) do
+    for _, e in pairs(JogoEntidades) do
+        
+            
         e:Desenhar()
+        
     end
 end
 

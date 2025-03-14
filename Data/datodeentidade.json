@@ -4,10 +4,21 @@
     "tulipa":{
         "essencia": "Planta",
         "nome": "Tulipa",
-        "saude": 50,
-        "aguaMaxima": 90,
+        "saude": 20,
+        "aguaMaxima": 25,
         "taxaDeAguaDiminui": 2,
         "cor": "roxoQuente",
         "telhaPlantavel": ["sujeira","grama"]
+    },
+
+    "formiga":{
+        "essencia": "Criatura",
+        "nome": "Formiga",
+        "saude": 20,
+        "aguaMaxima": 25,
+        "taxaDeAguaDiminui": 2,
+        "cor": "roxoQuente",
+        "telhaAtravessavel": ["sujeira","grama"],
+        "cerebelo": {"SEQUENCE":[""]}
     }
 }

@@ -72,9 +72,9 @@ function Mundo:MudarTelha(x,y,tileType)
 
    
    
-    for i, value in ipairs(JogoEntidades) do
+    for i, value in pairs(JogoEntidades) do
 
-        value:PermitirExistencia(i)
+        value:PermitirExistencia(true)
 
     end
 

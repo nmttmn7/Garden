@@ -85,7 +85,7 @@ function CliqueDireito()
     
 end
 
-function GerarEntidade(x,y)
+function GerarEntWPWPWPWPWPPWPidade(x,y)
 
     local Rx,Ry = love.mouse.getPosition( )
     

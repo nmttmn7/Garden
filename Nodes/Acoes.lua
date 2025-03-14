@@ -1,7 +1,9 @@
 
-
+-------------------------------------------------------------------------------------------------------------------------------------
+local RegistroDeAcoes = {}
+-------------------------------------------------------------------------------------------------------------------------------------
 --Wander
-function Vagar(entidade)
+function RegistroDeAcoes.Vagar(entidade)
 
     local memoria = entidade.cerebelo.memoria
     
@@ -37,7 +39,7 @@ function Vagar(entidade)
     return STATES.RUNNING
 end
 
-function GerarPosicao(entidade)
+function RegistroDeAcoes.GerarPosicao(entidade)
     print('GerarPosicao')
     local posicao = entidade.posicao
 
@@ -54,7 +56,7 @@ function GerarPosicao(entidade)
 end
 
 --For Food
-function ParaComida(entity)
+function RegistroDeAcoes.ParaComida(entity)
 
     local x = 50
     local y = 50
@@ -80,4 +82,14 @@ function ParaComida(entity)
     end
 
     return STATES.RUNNING
+end
+
+
+function GerarAcoes(NomeDaAcao, ...)
+    local registroDeEntidade = RegistroDeEntidade[NomeDaAcao]
+    if registroDeEntidade and registroDeEntidade.Construir then
+        return registroDeEntidade:Construir(NomeDaAcao,...)
+    else
+        error("RegistroDeEntidade '" .. tostring(NomeDaAcao) .. "' não encontrado!")
+    end
 end

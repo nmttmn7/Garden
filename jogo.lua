@@ -7,14 +7,15 @@ end
 
 function CarregarJogo()
 
-    local dato = Carregar('jogadora.json')
-    Jogadora:Construir(dato['regador'])
-
+    CarregarMundo()
+    CarregarJogoEntidades()
+    --    local dato = Carregar('jogadora.json')
+  --  Jogadora:Construir(dato['regador'])
 end
 
 function SalvarJogo()
     Salvar(gMundo, 'mundo.json')
-    
+    Salvar(JogoEntidades,'jogoentidades.json')
  --   Salvar(RegistroDeEntidade,'registrodeentidade.json')
    
 end
