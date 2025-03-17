@@ -9,7 +9,8 @@ Cores = {
     marromSujeira = {56,25,10}, --Brown 
     verdeGrama = {56,128,4}, --Green
     azulAgua = {0,80,255}, --Blue
-    roxoQuente = {149,46,143} --Purple
+    roxoQuente = {149,46,143}, --Purple
+    vermelhaRosa = {200,127,137} --Red
 }
 
 Telha = {

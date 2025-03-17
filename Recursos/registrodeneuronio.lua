@@ -147,7 +147,18 @@ function RegistroDeNEURONIOS.VagarACAO:Ato(entidade)
         posicao.y = posicao.y + 1
     end
 
-    
+    local MundoX, MundoY = love.window.getDesktopDimensions()
+
+    if posicao.x > MundoX then
+        posicao.x = 0
+    elseif posicao.x < 0 then
+        posicao.x = MundoX
+    end 
+    if posicao.y > MundoY then
+        posicao.y = 0
+    elseif posicao.y < 0 then
+        posicao.y = MundoY
+    end 
     if posicao.x == novoPosicao.x and posicao.y == novoPosicao.y then
         entidade.cerebelo.memoria['IrParaPosicao'] = nil
         return ESTADOS.SUCESSO;
@@ -161,8 +172,10 @@ function RegistroDeNEURONIOS.VagarACAO:GerarPosicao(entidade)
 
     local posicao = entidade.posicao
 
-    local xAleatoria = math.random(posicao.x - 10, posicao.x + 100)
-    local yAleatoria = math.random(posicao.y - 10, posicao.y + 100)
+    local MundoX, MundoY = love.window.getDesktopDimensions()
+
+    local xAleatoria = math.random(math.max(posicao.x - 10, 0), math.min(posicao.x + 100,MundoX))
+    local yAleatoria = math.random(math.max(posicao.y - 10, 0), math.min(posicao.y + 100,MundoY))
     --xAleatoria = 1 + posicao.x
     --yAleatoria = 1 + posicao.y
     xAleatoria = math.floor(xAleatoria)

@@ -20,5 +20,25 @@
         "cor": "roxoQuente",
         "telhaAtravessavel": ["sujeira","grama"],
         "cerebelo": {"SEQUENCE":[""]}
+    },
+
+    "apple":{
+        "essencia": "Objeto",
+        "nome": "Apple",
+        "saude": 20,
+        "aguaMaxima": 25,
+        "taxaDeAguaDiminui": 2,
+        "cor": "vermelhaRosa",
+        "telhaPlantavel": ["sujeira","grama"]
+    },
+
+    "ArvoreDeMel":{
+        "essencia": "Arvore",
+        "nome": "ArvoreDeMel",
+        "saude": 20,
+        "aguaMaxima": 25,
+        "taxaDeAguaDiminui": 2,
+        "cor": "vermelhaRosa",
+        "telhaPlantavel": ["sujeira","grama"]
     }
 }

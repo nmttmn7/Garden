@@ -27,10 +27,10 @@ local RegistroDeEntidade = {}
 RegistroDeEntidade.Entidade = {}
 RegistroDeEntidade.Entidade.__index = RegistroDeEntidade.Entidade
 
-function RegistroDeEntidade.Entidade:Construir(essencia,nome,saude,cor,posicao)
+function RegistroDeEntidade.Entidade:Construir(essencia,tabela)
 
     local x,y
-
+    local posicao = nil
     if posicao == nil then
     x,y = love.mouse.getPosition()
     else
@@ -40,9 +40,9 @@ function RegistroDeEntidade.Entidade:Construir(essencia,nome,saude,cor,posicao)
 
     local esse = {
         essencia = essencia, --essence
-        nome = nome, --name
-        saude = saude, --health
-        cor = cor,
+        nome = tabela['nome'], --name
+        saude = tabela['saude'], --health
+
         posicao = {
             x = x,
             y = y,
@@ -52,19 +52,6 @@ function RegistroDeEntidade.Entidade:Construir(essencia,nome,saude,cor,posicao)
     return esse
 end
 
-function RegistroDeEntidade.Entidade:Desenhar()
-    local x = self.posicao.x
-    local y = self.posicao.y
-    love.graphics.setColor(love.math.colorFromBytes(Cores[self.cor]))
-    love.graphics.circle('fill', x, y, 10)
-    love.graphics.setColor(0,0,0,1)
-    love.graphics.circle('line', x, y,  10)
-    
-    love.graphics.print("Name: " .. self.nome, x + 8,y)
-    love.graphics.print("Health: " .. self.saude, x + 8,y + 12)
-
-
-end
 
 function RegistroDeEntidade.Entidade:ObterPosicao()
     return self.posicao
@@ -75,7 +62,7 @@ function RegistroDeEntidade.Entidade:DigarNome() --say name
 end
 
 function RegistroDeEntidade.Entidade:PermitirExistencia(i)
-    return true
+    return false
 end
 
 function RegistroDeEntidade.Entidade:Ferir(value)
@@ -101,60 +88,13 @@ function RegistroDeEntidade.Entidade:AjudaConstruir()
 end
 
 -------------------------------------------------------------------------------------------------------------------------------------
-RegistroDeEntidade.Objeto = RegistroDeEntidade.Entidade:Construir()
-RegistroDeEntidade.Objeto.__index = RegistroDeEntidade.Objeto
 
-function RegistroDeEntidade.Objeto:Construir(essencia,tabela)
-    local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela['nome'],tabela['saude'],tabela['cor'],tabela['posicao'])
-    esse.wow = 3
-    setmetatable(esse,self)
-    return esse
-end
-function RegistroDeEntidade.Objeto:Atualizar(dt)
-    
-end
-function RegistroDeEntidade.Objeto:Desenhar()
-
-    
-    local x = self.posicao.x
-    local y = self.posicao.y
-    love.graphics.setColor(love.math.colorFromBytes(Cores[self.cor]))
-    love.graphics.circle('fill', x, y, 10)
-    love.graphics.setColor(0,0,0,1)
-    love.graphics.circle('line', x, y,  10)
-    
-    love.graphics.print("Name: " .. self.nome, x + 8,y)
-    love.graphics.print("Health: " .. self.saude, x + 8,y + 12)
-end
-
-function RegistroDeEntidade.Objeto:PermitirExistencia(boolean)
-    return true
-end
 -------------------------------------------------------------------------------------------------------------------------------------
 RegistroDeEntidade.Planta = RegistroDeEntidade.Entidade:Construir()
 RegistroDeEntidade.Planta.__index = RegistroDeEntidade.Planta
---Flores,árvore,PlantaMal
 
---Plantas precisam 
-    --Nome
-    --Saude
-
-    --água máxima
-    --Taxa de agua diminui
-    --Cor
-    --telha plantável
-
-    --Adulto
-    --taxa de crescimento
-    --Todas as plantas podem ser comidas
-
-    --árvore precisam
-    --Gerar comida
-
-    --PlantaMal precisam
-    --Gerar outras plantas
 function RegistroDeEntidade.Planta:Construir(essencia,tabela)
-    local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela['nome'],tabela['saude'],tabela['cor'],tabela['posicao'])
+    local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela)
 
     esse.aguaMaxima = tabela['aguaMaxima']
 
@@ -166,21 +106,17 @@ function RegistroDeEntidade.Planta:Construir(essencia,tabela)
     end
 
     esse.taxaDeAguaDiminui = tabela['taxaDeAguaDiminui']
+    esse.cor = tabela['cor']
     esse.telhaPlantavel = tabela['telhaPlantavel']
 
-    esse.taxaDeCrescimento = tabela['taxaDeCrescimento']
-
-    local crescimento = tabela['crescimento']
-    if crescimento == nil then
-        esse.crescimento = 0
-    else
-        esse.crescimento = crescimento
-    end
-
-    esse.crescimentoMaxima = tabela['crescimentoMaxima']
 
     setmetatable(esse,self)
     return esse
+end
+
+
+function RegistroDeEntidade.Planta:AumentarCrescimento()
+    self.crescimento = math.min(self.crescimento + self.taxaDeCrescimento, self.crescimentoMaxima)
 end
 
 function RegistroDeEntidade.Planta:VerificarAdulto()
@@ -188,10 +124,6 @@ function RegistroDeEntidade.Planta:VerificarAdulto()
         return true
     end
         return false
-end
-
-function RegistroDeEntidade.Planta:Crescer(dt)
-    self.crescimento = math.min(self.crescimento + self.taxaDeCrescimento, self.crescimentoMaxima)
 end
 
 local timer = 0
@@ -203,10 +135,6 @@ function RegistroDeEntidade.Planta:Atualizar(dt)
         self:DiminuirAgua()
         timer = 0
     end
-end
-
-function RegistroDeEntidade.Planta:AumentarAgua(quantidade)
-    self.agua = math.min(self.agua + quantidade, self.aguaMaxima)
 end
 
 function RegistroDeEntidade.Planta:DiminuirAgua()
@@ -251,13 +179,51 @@ function RegistroDeEntidade.Planta:PermitirExistencia(boolean)
     end
 end
 
+--[[
 
+RegistroDeEntidade.Planta = RegistroDeEntidade.Entidade:Construir()
+RegistroDeEntidade.Planta.__index = RegistroDeEntidade.Planta
+
+function RegistroDeEntidade.Planta:Construir(nome,saude,x,y,aguaMaxima,taxaDeAguaDiminui,cor,telhaPlantavel)
+    local esse = RegistroDeEntidade.Entidade:Construir(nome,saude,x,y)
+
+    esse.aguaMaxima = aguaMaxima
+    esse.taxaDeAguaDiminui = taxaDeAguaDiminui
+    esse.cor =cor
+    esse.telhaPlantavel = telhaPlantavel
+
+
+    setmetatable(esse,self)
+    return esse
+end
+
+
+function RegistroDeEntidade.Planta:Empate()
+    local posicao = self:ObterPosicao()
+
+    love.graphics.setColor(love.math.colorFromBytes(self.cor))
+    love.graphics.circle('fill', posicao.x, posicao.y, 10)
+    love.graphics.setColor(0,0,0,1)
+    love.graphics.circle('line', posicao.x, posicao.y,  10)
+
+
+
+    
+    love.graphics.print("Name: " .. self.nome, x + 8,y)
+
+    love.graphics.print("Water: " .. self.agua, x + 8,y + 12)
+
+end
+]]
+function RegistroDeEntidade.Planta:DigarNome()
+    print('Meu nome e ' .. self.nome)
+end
 -------------------------------------------------------------------------------------------------------------------------------------
 RegistroDeEntidade.Criatura = RegistroDeEntidade.Entidade:Construir()
 RegistroDeEntidade.Criatura.__index = RegistroDeEntidade.Criatura
 
 function RegistroDeEntidade.Criatura:Construir(essencia,tabela)
-    local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela['nome'],tabela['saude'],tabela['cor'],tabela['posicao'])
+    local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela)
 
 
     esse.aguaMaxima = tabela['aguaMaxima']
@@ -270,7 +236,7 @@ function RegistroDeEntidade.Criatura:Construir(essencia,tabela)
     end
 
     esse.taxaDeAguaDiminui = tabela['taxaDeAguaDiminui']
-
+    esse.cor = tabela['cor']
     esse.telhaAtravessavel = tabela['telhaAtravessavel']
 
     local root = GerarNeuronios('SEQUENCIA')

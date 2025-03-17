@@ -82,7 +82,7 @@ function love.keypressed(key)
     end
 
     if key == 'x' then 
-        GerarJogoEntidade('formiga')
+        GerarJogoEntidade('tulipa')
     end
 
     if key == 'r' then 
