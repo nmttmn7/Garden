@@ -92,7 +92,7 @@ end
 function RegarAsPlantas() -- Water(verb) The Plants
 for _, e in pairs(JogoEntidades) do
  
-    if e.essencia == "Planta" then
+    if e.AumentarAgua ~= nil then
         e:AumentarAgua(5)
     end
     

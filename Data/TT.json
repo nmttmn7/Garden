@@ -1,14 +1,1 @@
-{
-  "taxaDeAguaDiminui":2,
-  "telhaPlantavel":["sujeira","grama"],
-  "essencia":"Planta",
-  "nome":"Tulipa",
-  "cor":"roxoQuente",
-  "saude":50,
-  "agua":90,
-  "posicao":{
-    "x":959,
-    "y":451
-  },
-  "aguaMaxima":90
-}
+"Data/jogoentidades.json"

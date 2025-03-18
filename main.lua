@@ -7,6 +7,7 @@ require('Recursos.registrodeentidade')
 
 push = require 'Libraries.push'
 
+require('Mundo.ciclodianoite')
 
 require 'Entidade.Plantar.tulipa'
 require 'Entidade.Plantar.flor'
@@ -64,7 +65,7 @@ function love.update(dt)
         e:Atualizar(dt)
     end
 
-    
+    DiaNoite:Atualizar(dt)
 end
 
 function love.keypressed(key)
@@ -82,7 +83,7 @@ function love.keypressed(key)
     end
 
     if key == 'x' then 
-        GerarJogoEntidade('tulipa')
+        GerarJogoEntidade('formiga')
     end
 
     if key == 'r' then 
@@ -124,7 +125,7 @@ function love.draw()
 
     love.graphics.printf("Name: " .. TextoDoUsuario, 0, 0, love.graphics.getWidth())
 
-    
+    DiaNoite:Desenhar()
   --  push:finish()
 
 end

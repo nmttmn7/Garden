@@ -56,7 +56,7 @@ Classes.Cat = setmetatable({}, { __index = Classes.Animal })
 Classes.Cat.__index = Classes.Cat
 
 function Classes.Cat:new(name)
-    local self = setmetatable(Classes.Animal:new(name), self)
+    local self = setmetatable(Classes.Animal:new(name),Classes.Animal:new(name))
     return self
 end
 

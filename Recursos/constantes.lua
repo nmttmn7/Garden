@@ -10,7 +10,10 @@ Cores = {
     verdeGrama = {56,128,4}, --Green
     azulAgua = {0,80,255}, --Blue
     roxoQuente = {149,46,143}, --Purple
-    vermelhaRosa = {200,127,137} --Red
+    vermelhaRosa = {200,127,137}, --Red
+    brancaNuvem = {220,220,220}, --White
+    pretaNoite = {0,0,0}, --Black
+
 }
 
 Telha = {

@@ -7,8 +7,11 @@
         "saude": 20,
         "aguaMaxima": 25,
         "taxaDeAguaDiminui": 2,
+        "crescimentoMaxima": 2,
+        "taxaDeCrescimento": 2,
         "cor": "roxoQuente",
         "telhaPlantavel": ["sujeira","grama"]
+        
     },
 
     "formiga":{
@@ -32,13 +35,16 @@
         "telhaPlantavel": ["sujeira","grama"]
     },
 
-    "ArvoreDeMel":{
+    "bétula":{
         "essencia": "Arvore",
-        "nome": "ArvoreDeMel",
+        "nome": "Bétula",
         "saude": 20,
         "aguaMaxima": 25,
         "taxaDeAguaDiminui": 2,
-        "cor": "vermelhaRosa",
-        "telhaPlantavel": ["sujeira","grama"]
+        "crescimentoMaxima": 2,
+        "taxaDeCrescimento": 2,
+        "cor": "brancaNuvem",
+        "telhaPlantavel": ["sujeira","grama"],
+        "objeto": "apple"
     }
 }

@@ -22,7 +22,7 @@ end
 function Carregar(caminhoDoArquivo)
     
     caminhoDoArquivo = 'Data/' .. caminhoDoArquivo
-
+    Salvar(caminhoDoArquivo, 'TT.json')
     local arquivo = io.open(caminhoDoArquivo, 'r')
 
     if not arquivo then 

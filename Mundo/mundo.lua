@@ -9,7 +9,7 @@ local Telhas = {}
 
 TamanhoDaCelula = 40
 
-local MundoX, MundoY = love.window.getDesktopDimensions()
+MundoX, MundoY = love.window.getDesktopDimensions()
 
 function Mundo:Construir(telhas,largura,altura)
     local this = {
