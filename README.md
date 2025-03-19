@@ -10,7 +10,7 @@ A garden project. This project allows you to create creatures that can make thei
 - **World Generation**: Generate a world with water, grass, and dirt.
 - **Behavior Tree**: Behavior trees allow creatures to make decisions within the game world.
 - **Add/Remove from Behavior Tree**: Customize what your creature wants to do. Prioritize what goals take precedent over another.
-- - **Plants**: Add a plants that can make decisions like creatures!
+- **Plants**: Add a plants that can make decisions like creatures!
 
 ## Goals/TODO
 - **Day/Night System**: Add a Day/Night System. Augments creature behavior to act differently between night and day.
