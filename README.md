@@ -15,5 +15,5 @@ A garden project. This project allows you to create creatures that can make thei
 ## Goals/TODO
 - **Day/Night System**: Add a Day/Night System. Augments creature behavior to act differently between night and day.
 - **Survival System**: Add a Survival system. Creature must interact with one other(and the game world) in order to live!
-- **Building System**: Add a Building System. Allows a garden to be decorated and personalized.
+- **Building System**: Add a Building System. Allows a garden to be decorated and personalized
 
