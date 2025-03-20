@@ -186,6 +186,62 @@ function RegistroDeNEURONIOS.VagarACAO:GerarPosicao(entidade)
     return entidade.cerebelo.memoria['IrParaPosicao']
 end
 -------------------------------------------------------------------------------------------------------------------------------------
+--SUCCESS RUNNING FAILURE
+RegistroDeNEURONIOS.IrParaCasaACAO = RegistroDeNEURONIOS.NEURONIO:Construir()
+RegistroDeNEURONIOS.IrParaCasaACAO.__index = RegistroDeNEURONIOS.IrParaCasaACAO
+
+function RegistroDeNEURONIOS.IrParaCasaACAO:Construir(essencia)
+    local esse = RegistroDeNEURONIOS.NEURONIO:Construir(essencia)
+
+    setmetatable(esse,self)
+    return esse
+
+end
+
+function RegistroDeNEURONIOS.IrParaCasaACAO:Correr(entidade)
+    if entidade == nil then
+        error("ENTIDADE E NIL")
+    else
+    return self:Ato(entidade)
+    end
+end
+
+local function EntrarEmCasa(casa,entidade)
+    casa:Adicionar(entidade)
+    RemoverJogoEntidades(entidade)
+end
+local function IrParaPosicao(novaPosicao,entidade)
+    local posicao = entidade
+
+    if posicao.x > novaPosicao.x then
+        posicao.x = posicao.x - 1
+    elseif posicao.x < novaPosicao.x then
+        posicao.x = posicao.x + 1
+    end
+
+    if posicao.y > novaPosicao.y then
+        posicao.y = posicao.y - 1
+    elseif posicao.y < novaPosicao.y then
+        posicao.y = posicao.y + 1
+    end
+end
+
+function RegistroDeNEURONIOS.IrParaCasaACAO:Ato(entidade)
+    if DiaNoite.ativoTempo.essencia == entidade.tempo then
+        return ESTADOS.FALHA
+    end
+    for _, casa in pairs(JogoEntidades) do
+        if casa.criatura == entidade.nomeDaEssencia then
+
+            IrParaPosicao(casa.posicao,entidade.posicao)
+            return ESTADOS.CORRENDO
+            
+        end
+    end
+end
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
 function GerarNeuronios(NomeDeNeuronios)
     local registroDeNeuronios = RegistroDeNEURONIOS[NomeDeNeuronios]
     if registroDeNeuronios and registroDeNeuronios.Construir then

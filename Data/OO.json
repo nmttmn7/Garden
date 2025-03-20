@@ -1,7 +1,7 @@
 {
-  "essencia":"SEQUENCIA",
   "filhos":[{
-      "essencia":"ACAO",
-      "filhos":[]
-    }]
+      "filhos":[],
+      "essencia":"ACAO"
+    }],
+  "essencia":"SEQUENCIA"
 }

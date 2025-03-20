@@ -2,7 +2,76 @@ require('Recursos.constantes')
 function math.lerp(a,b,t)
     return a + (b-a) * t
 end
+
 DiaNoite = {
+    listaDeTempo = {},
+    indice = 1,
+    ativoTempo = {cor = {0,0,0}, alfa = 0, tempo = 0.01, essencia = 'dia'},
+}
+
+function DiaNoite:AdicionarCor(cor,alfa,tempo,essencia)
+    local novo = {
+        cor = cor,
+        alfa = alfa,
+        tempo = tempo,
+        essencia = essencia
+    }
+    table.insert(DiaNoite.listaDeTempo,novo)
+end
+
+function DiaNoite:ObterAtivoTempo()
+    return DiaNoite.ativoTempo
+end
+
+function DiaNoite:ObterAtivoCor()
+    return DiaNoite.ativoTempo.cor[1],DiaNoite.ativoTempo.cor[2],DiaNoite.ativoTempo.cor[3],DiaNoite.ativoTempo.alfa
+end
+
+local tempo = 0.01
+DiaNoite:AdicionarCor(Cores['pretaNoite'],20,tempo,'noite')
+DiaNoite:AdicionarCor(Cores['brancaNuvem'],0,tempo,'dia')
+
+DiaNoite.ativoTempo.tempo = DiaNoite.listaDeTempo[1].tempo
+DiaNoite.ativoTempo.essencia = DiaNoite.listaDeTempo[1].essencia
+
+local i = 1
+function DiaNoite:Atualizar(dt)
+
+    local ativoCor = DiaNoite.ativoTempo
+    local c2 = DiaNoite.listaDeTempo[i]
+
+    ativoCor.alfa = math.lerp(ativoCor.alfa,c2.alfa,ativoCor.tempo)
+
+    if math.floor(ativoCor.alfa) == math.floor(c2.alfa) or math.floor(ativoCor.alfa) + 1 == math.floor(c2.alfa) then
+
+        
+        if i < #DiaNoite.listaDeTempo then
+            i = i + 1
+            ativoCor.tempo = DiaNoite.listaDeTempo[i].tempo
+            ativoCor.essencia = DiaNoite.listaDeTempo[i].essencia
+        else
+            i = 1
+            ativoCor.tempo = DiaNoite.listaDeTempo[i].tempo
+            ativoCor.essencia = DiaNoite.listaDeTempo[i].essencia
+        end
+        
+
+    end   
+
+        
+end
+
+
+function DiaNoite:Desenhar()
+    
+    love.graphics.setColor(love.math.colorFromBytes(DiaNoite:ObterAtivoCor()))
+    love.graphics.rectangle('fill',0,0,MundoX,MundoY)
+end
+--[[
+return DiaNoite
+--[[
+
+DiaNoite33 = {
     dia = {essencia = 'dia', quantidade = 20.00},
     noite = {essencia = 'noite', quantidade = 20.00},
 
@@ -52,7 +121,7 @@ function DiaNoite:Atualizar(dt)
         timer = 0
     end
 end
-]]
+
 function DiaNoite:Atualizar(dt)
     c:lerp(s,0.001)
 end
@@ -65,3 +134,4 @@ function DiaNoite:Desenhar()
 end
 
 return DiaNoite
+]]

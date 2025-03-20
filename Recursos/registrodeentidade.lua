@@ -48,6 +48,7 @@ RegistroDeEntidade.Entidade.__index = RegistroDeEntidade.Entidade
 
 function RegistroDeEntidade.Entidade:Construir(essencia,tabela)
 
+
     local x,y
     local posicao = tabela['posicao']
     if posicao == nil then
@@ -65,7 +66,9 @@ function RegistroDeEntidade.Entidade:Construir(essencia,tabela)
         posicao = {
             x = x,
             y = y,
-        }
+        },
+        
+        nomeDaEssencia = tabela['nomeDaEssencia']
     }
     setmetatable(esse,self)
     return esse
@@ -304,10 +307,14 @@ function RegistroDeEntidade.Criatura:Construir(essencia,tabela)
 
     esse.telhaAtravessavel = tabela['telhaAtravessavel']
 
-    local root = GerarNeuronios('SEQUENCIA')
-    root:Adicionar(GerarNeuronios('VagarACAO'))
+    local root = GerarNeuronios('SELETOR')
+    local casa = GerarNeuronios('SEQUENCIA')
+    casa:Adicionar(GerarNeuronios('IrParaCasaACAO'))
+    root:Adicionar(casa)
     
     esse.cerebelo = { memoria = {}, arvoreDeComportamento = root}
+
+    esse.tempo = tabela['tempo']
     
     return esse
 end
@@ -388,6 +395,44 @@ function RegistroDeEntidade.Objeto:PermitirExistencia(boolean)
     return true
 end
 -------------------------------------------------------------------------------------------------------------------------------------
+RegistroDeEntidade.Casa = {}
+RegistroDeEntidade.Casa.__index = RegistroDeEntidade.Casa
+RegistroDeEntidade.Casa.predecessores =  RegistrarPredecessor({RegistroDeEntidade.Entidade})
+setmetatable(RegistroDeEntidade.Casa,RegistroDeEntidade.Casa.predecessores)
+
+function RegistroDeEntidade.Casa:Construir(essencia,tabela)
+    local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela)
+    esse = setmetatable(esse, RegistroDeEntidade.Casa)
+    esse.listaDeCriatura = {}
+    esse.criatura = tabela['criatura']
+    setmetatable(esse,self)
+    return esse
+end
+
+function RegistroDeEntidade.Casa:Atualizar(dt)
+    
+end
+function RegistroDeEntidade.Casa:Desenhar()
+
+    
+    local x = self.posicao.x
+    local y = self.posicao.y
+    love.graphics.setColor(love.math.colorFromBytes(Cores[self.cor]))
+    love.graphics.circle('fill', x, y, 10)
+    love.graphics.setColor(0,0,0,1)
+    love.graphics.circle('line', x, y,  10)
+    
+    love.graphics.print("Name: " .. self.nome, x + 8,y)
+    love.graphics.print("Health: " .. self.saude, x + 8,y + 12)
+end
+function RegistroDeEntidade.Casa:AdicionarEntidades(value)
+    local id = tostring(value)
+    self.listaDeCriatura[id] = value
+end
+function RegistroDeEntidade.Casa:PermitirExistencia(boolean)
+    return true
+end
+-------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -425,7 +470,7 @@ end
 function GerarJogoEntidade(id)
 
     local dato = DatoDeEntidade[id]
-    
+    dato['nomeDaEssencia'] = id
     local entidade = GerarEntidade(dato['essencia'],dato)
     
     if entidade:PermitirExistencia(false) then

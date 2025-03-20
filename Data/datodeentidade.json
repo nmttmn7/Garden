@@ -22,7 +22,17 @@
         "taxaDeAguaDiminui": 2,
         "cor": "roxoQuente",
         "telhaAtravessavel": ["sujeira","grama"],
-        "cerebelo": {"SEQUENCE":[""]}
+        "cerebelo": {"SEQUENCE":[""]},
+        "tempo": "noite"
+    },
+
+    "casadeformiga":{
+        "essencia": "Casa",
+        "criatura": "formiga",
+        "nome": "Casa De Formiga",
+        "saude": 20,
+        "cor": "roxoQuente",
+        "telhaAtravessavel": ["sujeira","grama"]
     },
 
     "apple":{
