@@ -1,1 +1,64 @@
-[]
+{
+  "table: 0x0254c3b495f8":{
+    "criatura":"formiga",
+    "listaDeCriatura":[],
+    "essencia":"Casa",
+    "nomeDaEssencia":"casadeformiga",
+    "posicao":{
+      "y":476,
+      "x":1017
+    },
+    "saude":20,
+    "cor":"roxoQuente",
+    "nome":"Casa De Formigaa"
+  },
+  "table: 0x0254c3d87280":{
+    "cerebelo":{
+      "arvoreDeComportamento":{
+        "essencia":"SELETOR",
+        "filhos":[{
+            "essencia":"SEQUENCIA",
+            "filhos":[{
+                "essencia":"ProcurerCasaACAO",
+                "filhos":[]
+              },{
+                "essencia":"IrParaCasaACAO",
+                "filhos":[]
+              },{
+                "essencia":"EntreEmCasaACAO",
+                "filhos":[]
+              }]
+          }]
+      },
+      "memoria":{
+        "Casa":{
+          "criatura":"formiga",
+          "listaDeCriatura":[],
+          "essencia":"Casa",
+          "nomeDaEssencia":"casadeformiga",
+          "posicao":{
+            "y":476,
+            "x":1017
+          },
+          "saude":20,
+          "cor":"roxoQuente",
+          "nome":"Casa De Formigaa"
+        }
+      }
+    },
+    "essencia":"Criatura",
+    "aguaMaxima":25,
+    "posicao":{
+      "y":476,
+      "x":1148
+    },
+    "saude":20,
+    "cor":"roxoQuente",
+    "nomeDaEssencia":"formiga",
+    "tempo":"noite",
+    "telhaAtravessavel":["sujeira","grama"],
+    "agua":25,
+    "taxaDeAguaDiminui":2,
+    "nome":"Formigax"
+  }
+}

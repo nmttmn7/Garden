@@ -10,7 +10,7 @@ function Salvar(data,caminhoDoArquivo)
 
     if arquivo then
         
-        local encoded = Dkjson.encode(data, { indent = true })
+        local encoded = Dkjson.encode(data, { indent = true, empty_table_as_array = true })
 
         arquivo:write(encoded)
 

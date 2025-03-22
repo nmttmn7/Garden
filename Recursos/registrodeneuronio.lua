@@ -187,6 +187,39 @@ function RegistroDeNEURONIOS.VagarACAO:GerarPosicao(entidade)
 end
 -------------------------------------------------------------------------------------------------------------------------------------
 --SUCCESS RUNNING FAILURE
+
+RegistroDeNEURONIOS.ProcurerCasaACAO = RegistroDeNEURONIOS.NEURONIO:Construir()
+RegistroDeNEURONIOS.ProcurerCasaACAO.__index = RegistroDeNEURONIOS.ProcurerCasaACAO
+
+function RegistroDeNEURONIOS.ProcurerCasaACAO:Construir(essencia)
+    local esse = RegistroDeNEURONIOS.NEURONIO:Construir(essencia)
+
+    setmetatable(esse,self)
+    return esse
+end
+
+
+function RegistroDeNEURONIOS.ProcurerCasaACAO:Correr(entidade)
+    
+    if DiaNoite.ativoTempo.essencia == entidade.tempo then
+        return ESTADOS.FALHA
+    elseif entidade.cerebelo.memoria['Casa'] ~= nil then
+        return ESTADOS.SUCESSO
+    end
+
+    for _, casa in pairs(JogoEntidades) do
+        if casa.criatura == entidade.nomeDaEssencia then
+
+            entidade.cerebelo.memoria['Casa'] = casa
+            return ESTADOS.SUCESSO
+            
+        end
+    end
+
+    return ESTADOS.FALHA
+
+end
+
 RegistroDeNEURONIOS.IrParaCasaACAO = RegistroDeNEURONIOS.NEURONIO:Construir()
 RegistroDeNEURONIOS.IrParaCasaACAO.__index = RegistroDeNEURONIOS.IrParaCasaACAO
 
@@ -198,18 +231,6 @@ function RegistroDeNEURONIOS.IrParaCasaACAO:Construir(essencia)
 
 end
 
-function RegistroDeNEURONIOS.IrParaCasaACAO:Correr(entidade)
-    if entidade == nil then
-        error("ENTIDADE E NIL")
-    else
-    return self:Ato(entidade)
-    end
-end
-
-local function EntrarEmCasa(casa,entidade)
-    casa:Adicionar(entidade)
-    RemoverJogoEntidades(entidade)
-end
 local function IrParaPosicao(novaPosicao,entidade)
     local posicao = entidade
 
@@ -224,23 +245,51 @@ local function IrParaPosicao(novaPosicao,entidade)
     elseif posicao.y < novaPosicao.y then
         posicao.y = posicao.y + 1
     end
+    local bound = 10
+
+    if posicao.x < posicao.x + bound and posicao.x > posicao.x - bound then
+        return true
+    end
 end
 
-function RegistroDeNEURONIOS.IrParaCasaACAO:Ato(entidade)
-    if DiaNoite.ativoTempo.essencia == entidade.tempo then
-        return ESTADOS.FALHA
-    end
-    for _, casa in pairs(JogoEntidades) do
-        if casa.criatura == entidade.nomeDaEssencia then
+function RegistroDeNEURONIOS.IrParaCasaACAO:Correr(entidade)
 
-            IrParaPosicao(casa.posicao,entidade.posicao)
-            return ESTADOS.CORRENDO
-            
+    local casa = entidade.cerebelo.memoria['Casa']
+
+        IrParaPosicao(casa.posicao,entidade.posicao)
+
+        local bound = 10
+
+        if entidade.posicao.x < casa.posicao.x + bound and entidade.posicao.x > casa.posicao.x - bound then
+            return ESTADOS.SUCESSO
         end
-    end
+        return ESTADOS.CORRENDO
+
 end
 
 
+
+RegistroDeNEURONIOS.EntreEmCasaACAO = RegistroDeNEURONIOS.NEURONIO:Construir()
+RegistroDeNEURONIOS.EntreEmCasaACAO.__index = RegistroDeNEURONIOS.EntreEmCasaACAO
+
+function RegistroDeNEURONIOS.EntreEmCasaACAO:Construir(essencia)
+    local esse = RegistroDeNEURONIOS.NEURONIO:Construir(essencia)
+
+    setmetatable(esse,self)
+    return esse
+end
+
+
+
+function RegistroDeNEURONIOS.EntreEmCasaACAO:Correr(entidade)
+    
+    local casa = entidade.cerebelo.memoria['Casa']
+    RemoverJogoEntidades(entidade)
+    entidade.cerebelo.memoria = nil
+    local encoded = Dkjson.encode(entidade, { empty_table_as_array = true })
+    table.insert(casa.listaDeCriatura,encoded)
+
+end
 -------------------------------------------------------------------------------------------------------------------------------------
 function GerarNeuronios(NomeDeNeuronios)
     local registroDeNeuronios = RegistroDeNEURONIOS[NomeDeNeuronios]

@@ -34,6 +34,16 @@ DiaNoite:AdicionarCor(Cores['brancaNuvem'],0,tempo,'dia')
 DiaNoite.ativoTempo.tempo = DiaNoite.listaDeTempo[1].tempo
 DiaNoite.ativoTempo.essencia = DiaNoite.listaDeTempo[1].essencia
 
+local function VerificarCasas()
+
+    for _, casa in pairs(JogoEntidades) do
+        if casa.SairDeCasa ~= nil then
+            casa:SairDeCasa()
+        end
+    end
+
+end
+
 local i = 1
 function DiaNoite:Atualizar(dt)
 
@@ -49,10 +59,12 @@ function DiaNoite:Atualizar(dt)
             i = i + 1
             ativoCor.tempo = DiaNoite.listaDeTempo[i].tempo
             ativoCor.essencia = DiaNoite.listaDeTempo[i].essencia
+            VerificarCasas()
         else
             i = 1
             ativoCor.tempo = DiaNoite.listaDeTempo[i].tempo
             ativoCor.essencia = DiaNoite.listaDeTempo[i].essencia
+            VerificarCasas()
         end
         
 
@@ -60,6 +72,7 @@ function DiaNoite:Atualizar(dt)
 
         
 end
+
 
 
 function DiaNoite:Desenhar()

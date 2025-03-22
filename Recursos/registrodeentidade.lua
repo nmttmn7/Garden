@@ -309,7 +309,9 @@ function RegistroDeEntidade.Criatura:Construir(essencia,tabela)
 
     local root = GerarNeuronios('SELETOR')
     local casa = GerarNeuronios('SEQUENCIA')
+    casa:Adicionar(GerarNeuronios('ProcurerCasaACAO'))
     casa:Adicionar(GerarNeuronios('IrParaCasaACAO'))
+    casa:Adicionar(GerarNeuronios('EntreEmCasaACAO'))
     root:Adicionar(casa)
     
     esse.cerebelo = { memoria = {}, arvoreDeComportamento = root}
@@ -403,15 +405,23 @@ setmetatable(RegistroDeEntidade.Casa,RegistroDeEntidade.Casa.predecessores)
 function RegistroDeEntidade.Casa:Construir(essencia,tabela)
     local esse = RegistroDeEntidade.Entidade:Construir(essencia,tabela)
     esse = setmetatable(esse, RegistroDeEntidade.Casa)
-    esse.listaDeCriatura = {}
+
+    local listaDeCriatura = tabela['listaDeCriatura']
+    if listaDeCriatura == nil then
+        esse.listaDeCriatura = {}
+    else
+        esse.listaDeCriatura = listaDeCriatura
+    end
+
     esse.criatura = tabela['criatura']
-    setmetatable(esse,self)
+    
     return esse
 end
 
 function RegistroDeEntidade.Casa:Atualizar(dt)
     
 end
+
 function RegistroDeEntidade.Casa:Desenhar()
 
     
@@ -431,6 +441,16 @@ function RegistroDeEntidade.Casa:AdicionarEntidades(value)
 end
 function RegistroDeEntidade.Casa:PermitirExistencia(boolean)
     return true
+end
+
+function RegistroDeEntidade.Casa:SairDeCasa()
+    if self.listaDeCriatura == nil then return end
+    for _, value in ipairs(self.listaDeCriatura) do
+        local dato = Decodificar(value)
+        AdicionarJogoEntidades(GerarEntidade(dato['essencia'],dato))
+    end
+
+    self.listaDeCriatura = {}
 end
 -------------------------------------------------------------------------------------------------------------------------------------
 

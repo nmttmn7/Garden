@@ -2,7 +2,7 @@
 
 function JogoNovo()
     Claro('mundo.json')
-    
+    Claro('jogoentidades.json')
 end
 
 function CarregarJogo()
